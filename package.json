@@ -1,0 +1,16 @@
+{
+  "name": "whatsapp-pairing-website",
+  "version": "1.0.0",
+  "description": "WhatsApp Pairing Code Website",
+  "main": "index.html",
+  "scripts": {
+    "vercel-build": "echo 'Building...'"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.5.0",
+    "qrcode": "^1.5.3"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

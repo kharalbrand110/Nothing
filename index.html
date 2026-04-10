@@ -9,263 +9,95 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background: linear-gradient(135deg, #0a0f1e, #1a1a2e);
-            min-height: 100vh;
-        }
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #0a0f1e, #1a1a2e);
-        }
-        .login-card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .login-card h2 {
-            color: #00a859;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .login-card input {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-        }
-        .login-card button {
-            width: 100%;
-            padding: 15px;
-            background: #00a859;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .message {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-            display: none;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #0a0f1e, #1a1a2e); min-height: 100vh; }
+        
+        .login-container { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #0a0f1e, #1a1a2e); }
+        .login-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid rgba(255,255,255,0.1); }
+        .login-card h2 { color: #00a859; text-align: center; margin-bottom: 30px; }
+        .login-card input { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: white; font-size: 16px; }
+        .login-card button { width: 100%; padding: 15px; background: #00a859; border: none; border-radius: 10px; color: white; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .message { margin-top: 20px; padding: 10px; border-radius: 10px; text-align: center; display: none; }
         .error { background: rgba(231,76,60,0.2); color: #e74c3c; border: 1px solid #e74c3c; }
         .success { background: rgba(46,204,113,0.2); color: #2ecc71; border: 1px solid #2ecc71; }
+        .info { background: rgba(52,152,219,0.2); color: #3498db; border: 1px solid #3498db; }
         
-        .admin-container {
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 280px;
-            background: linear-gradient(180deg, #0f1422, #0a0f1e);
-            border-right: 1px solid rgba(255,255,255,0.05);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-        }
-        .sidebar-header {
-            padding: 25px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .sidebar-header h3 {
-            color: #00a859;
-            font-size: 20px;
-        }
-        .sidebar-menu {
-            padding: 20px 0;
-        }
-        .menu-item {
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: #8b92a8;
-            border-left: 3px solid transparent;
-        }
-        .menu-item:hover, .menu-item.active {
-            background: rgba(0,168,89,0.1);
-            color: #00a859;
-            border-left-color: #00a859;
-        }
+        .admin-container { display: flex; min-height: 100vh; }
+        .sidebar { width: 280px; background: linear-gradient(180deg, #0f1422, #0a0f1e); border-right: 1px solid rgba(255,255,255,0.05); position: fixed; height: 100vh; overflow-y: auto; }
+        .sidebar-header { padding: 25px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .sidebar-header h3 { color: #00a859; font-size: 20px; }
+        .sidebar-menu { padding: 20px 0; }
+        .menu-item { padding: 15px 25px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.3s; color: #8b92a8; border-left: 3px solid transparent; }
+        .menu-item:hover, .menu-item.active { background: rgba(0,168,89,0.1); color: #00a859; border-left-color: #00a859; }
         .menu-item i { width: 24px; }
         
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: 20px;
-        }
-        .top-bar {
-            background: #0f1422;
-            border-radius: 15px;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
+        .main-content { flex: 1; margin-left: 280px; padding: 20px; }
+        .top-bar { background: #0f1422; border-radius: 15px; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .top-bar h2 { color: white; font-size: 20px; }
-        .logout-btn {
-            background: rgba(231,76,60,0.2);
-            border: none;
-            padding: 8px 20px;
-            border-radius: 10px;
-            color: #e74c3c;
-            cursor: pointer;
-        }
+        .logout-btn { background: rgba(231,76,60,0.2); border: none; padding: 8px 20px; border-radius: 10px; color: #e74c3c; cursor: pointer; }
         
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .stat-card {
-            background: #0f1422;
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: #0f1422; border-radius: 20px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); }
         .stat-card h4 { color: #8b92a8; font-size: 13px; margin-bottom: 10px; }
         .stat-card .value { font-size: 32px; font-weight: 800; color: #00a859; }
         
-        .section {
-            background: #0f1422;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            display: none;
-        }
+        .section { background: #0f1422; border-radius: 20px; padding: 20px; margin-bottom: 20px; display: none; }
         .section.active { display: block; }
-        .section h3 { color: #00a859; margin-bottom: 20px; }
+        .section h3 { color: #00a859; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        
+        .search-box { margin-bottom: 20px; display: flex; gap: 10px; }
+        .search-box input { flex: 1; padding: 12px; background: #1a1f2e; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; }
+        .search-box button { padding: 12px 20px; background: #00a859; border: none; border-radius: 10px; color: white; cursor: pointer; }
         
         table { width: 100%; border-collapse: collapse; overflow-x: auto; display: block; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e0; }
         th { color: #00a859; }
         
-        button {
-            background: #00a859;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            margin: 5px;
-        }
+        button { background: #00a859; border: none; padding: 8px 15px; border-radius: 8px; color: white; cursor: pointer; margin: 5px; }
         .btn-approve { background: #2ecc71; }
         .btn-reject { background: #e74c3c; }
         .btn-edit { background: #3498db; }
         .btn-delete { background: #e74c3c; }
+        .btn-warning { background: #f39c12; }
         
-        .status-pending { background: rgba(255,165,0,0.2); color: #ffa500; padding: 4px 8px; border-radius: 5px; font-size: 12px; }
-        .status-approved { background: rgba(46,204,113,0.2); color: #2ecc71; padding: 4px 8px; border-radius: 5px; font-size: 12px; }
+        .status-pending { background: rgba(255,165,0,0.2); color: #ffa500; padding: 4px 8px; border-radius: 5px; font-size: 12px; display: inline-block; }
+        .status-approved { background: rgba(46,204,113,0.2); color: #2ecc71; padding: 4px 8px; border-radius: 5px; font-size: 12px; display: inline-block; }
         
-        .notification-box {
-            background: #1a1f2e;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .notification-box input, .notification-box textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            background: #0f1422;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            color: white;
-        }
+        .notification-box, .settings-box { background: #1a1f2e; border-radius: 15px; padding: 20px; margin-bottom: 20px; }
+        .notification-box input, .notification-box textarea, .settings-box input, .settings-box select { width: 100%; padding: 12px; margin-bottom: 15px; background: #0f1422; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; }
         .notification-box textarea { resize: vertical; min-height: 100px; }
         
-        .notification-item {
-            background: #1a1f2e;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-left: 3px solid #00a859;
-        }
+        .notification-item { background: #1a1f2e; border-radius: 10px; padding: 15px; margin-bottom: 10px; border-left: 3px solid #00a859; position: relative; }
         .notification-item .title { font-weight: bold; color: #00a859; margin-bottom: 5px; }
         .notification-item .msg { font-size: 13px; color: #cbd5e0; margin-bottom: 5px; }
         .notification-item .date { font-size: 10px; color: #8b92a8; }
-        .notification-actions { float: right; margin-top: -30px; }
+        .notification-actions { position: absolute; top: 15px; right: 15px; }
         .notification-actions button { padding: 5px 10px; font-size: 11px; margin: 0 3px; }
         
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: #0f1422;
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 450px;
-        }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; }
+        .modal-content { background: #0f1422; padding: 30px; border-radius: 20px; width: 90%; max-width: 500px; }
         .modal-content h3 { color: #00a859; margin-bottom: 20px; }
-        .modal-content input, .modal-content textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            background: #1a1f2e;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            color: white;
-        }
-        .modal-content textarea { min-height: 100px; }
+        .modal-content input, .modal-content select, .modal-content textarea { width: 100%; padding: 12px; margin-bottom: 15px; background: #1a1f2e; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 10px; }
+        .modal-buttons button { flex: 1; }
         
-        @media (max-width: 768px) {
-            .sidebar { width: 80px; }
-            .sidebar-header h3, .menu-item span { display: none; }
-            .menu-item i { font-size: 20px; }
-            .main-content { margin-left: 80px; }
-        }
+        .user-detail-box { background: #1a1f2e; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .user-detail-box p { margin: 8px 0; color: #cbd5e0; }
+        .user-detail-box strong { color: #00a859; }
         
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #00a859;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            z-index: 10001;
-            animation: fadeOut 3s ease forwards;
-        }
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            70% { opacity: 1; }
-            100% { opacity: 0; visibility: hidden; }
-        }
+        .balance-control { display: flex; gap: 10px; margin-top: 10px; }
+        .balance-control select, .balance-control input { flex: 1; }
+        
+        .qr-preview { text-align: center; margin: 15px 0; padding: 15px; background: #1a1f2e; border-radius: 10px; }
+        .qr-preview img { max-width: 150px; border-radius: 10px; border: 2px solid #00a859; }
+        
+        @media (max-width: 768px) { .sidebar { width: 80px; } .sidebar-header h3, .menu-item span { display: none; } .menu-item i { font-size: 20px; } .main-content { margin-left: 80px; } }
+        
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #00a859; color: white; padding: 12px 24px; border-radius: 10px; z-index: 10001; animation: fadeOut 3s ease forwards; }
+        @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+        
+        .auto-create-box { background: rgba(46,204,113,0.1); border: 1px solid #2ecc71; border-radius: 10px; padding: 15px; margin-bottom: 20px; text-align: center; }
+        .auto-create-btn { background: #2ecc71; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -273,25 +105,31 @@
 <div id="loginPage" class="login-container">
     <div class="login-card">
         <h2><i class="fas fa-crown"></i> PAK EARN ADMIN</h2>
+        <div id="autoCreateBox" class="auto-create-box" style="display:none;">
+            <p><i class="fas fa-info-circle"></i> No admin account found! Create one now:</p>
+            <button class="auto-create-btn" onclick="autoCreateAdmin()"><i class="fas fa-user-plus"></i> Create Admin Account</button>
+        </div>
         <input type="email" id="adminEmail" placeholder="Admin Email" value="admin@pakearn.com">
         <input type="password" id="adminPassword" placeholder="Password" value="Admin@123">
         <button onclick="adminLogin()"><i class="fas fa-sign-in-alt"></i> LOGIN</button>
         <div id="loginMessage" class="message"></div>
+        <div style="text-align:center; margin-top:20px; padding-top:15px; border-top:1px solid rgba(255,255,255,0.1);">
+            <p style="color:#8b92a8; font-size:12px;">Default: admin@pakearn.com / Admin@123</p>
+        </div>
     </div>
 </div>
 
 <div id="adminPanel" style="display:none;">
     <div class="admin-container">
         <div class="sidebar">
-            <div class="sidebar-header">
-                <h3><i class="fas fa-crown"></i> PAK EARN</h3>
-            </div>
+            <div class="sidebar-header"><h3><i class="fas fa-crown"></i> PAK EARN</h3></div>
             <div class="sidebar-menu">
                 <div class="menu-item active" onclick="showSection('dashboard')"><i class="fas fa-chart-line"></i><span> Dashboard</span></div>
-                <div class="menu-item" onclick="showSection('users')"><i class="fas fa-users"></i><span> Users</span></div>
+                <div class="menu-item" onclick="showSection('users')"><i class="fas fa-users"></i><span> User Management</span></div>
                 <div class="menu-item" onclick="showSection('deposits')"><i class="fas fa-arrow-down"></i><span> Deposits</span></div>
                 <div class="menu-item" onclick="showSection('withdrawals')"><i class="fas fa-arrow-up"></i><span> Withdrawals</span></div>
                 <div class="menu-item" onclick="showSection('plans')"><i class="fas fa-box"></i><span> Plans</span></div>
+                <div class="menu-item" onclick="showSection('settings')"><i class="fas fa-cog"></i><span> Settings</span></div>
                 <div class="menu-item" onclick="showSection('notifications')"><i class="fas fa-bell"></i><span> Notifications</span></div>
             </div>
         </div>
@@ -308,11 +146,18 @@
                     <div class="stat-card"><h4>Total Users</h4><div class="value" id="totalUsers">0</div></div>
                     <div class="stat-card"><h4>Pending Deposits</h4><div class="value" id="pendingDeposits">0</div></div>
                     <div class="stat-card"><h4>Pending Withdrawals</h4><div class="value" id="pendingWithdrawals">0</div></div>
+                    <div class="stat-card"><h4>Total Deposit Balance</h4><div class="value" id="totalDepositBal">Rs 0</div></div>
+                    <div class="stat-card"><h4>Total Profit Balance</h4><div class="value" id="totalProfitBal">Rs 0</div></div>
                 </div>
             </div>
             
-            <!-- Users -->
+            <!-- Users Management -->
             <div id="usersSection" class="section">
+                <div class="search-box">
+                    <input type="text" id="searchUserInput" placeholder="Search by name, email or phone...">
+                    <button onclick="searchUsers()"><i class="fas fa-search"></i> Search</button>
+                    <button onclick="loadUsers()"><i class="fas fa-sync"></i> Refresh</button>
+                </div>
                 <div style="overflow-x: auto;">
                     <table>
                         <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Deposit Bal</th><th>Profit Bal</th><th>Status</th><th>Actions</th></tr></thead>
@@ -352,20 +197,81 @@
                 </div>
             </div>
             
-            <!-- Notifications Section with Edit/Delete -->
+            <!-- Settings Section with QR Code Change Option -->
+            <div id="settingsSection" class="section">
+                <div class="settings-box">
+                    <h3><i class="fas fa-qrcode"></i> QR Code Settings</h3>
+                    <div class="qr-preview" id="qrPreview">
+                        <img id="currentQrImage" src="" alt="Current QR Code">
+                    </div>
+                    <input type="text" id="qrUrlInput" placeholder="QR Code Image URL">
+                    <button onclick="updateQRSettings()" style="width:100%;"><i class="fas fa-save"></i> Update QR Code</button>
+                </div>
+                
+                <div class="settings-box">
+                    <h3><i class="fas fa-money-bill"></i> Payment Settings</h3>
+                    <input type="text" id="easypaisaNumber" placeholder="EasyPaisa Account Number">
+                    <input type="text" id="jazzcashNumber" placeholder="JazzCash Account Number">
+                    <input type="text" id="bankDetails" placeholder="Bank Account Details">
+                    <button onclick="updatePaymentSettings()" style="width:100%;"><i class="fas fa-save"></i> Save Payment Settings</button>
+                </div>
+                
+                <div class="settings-box">
+                    <h3><i class="fas fa-lock"></i> Withdrawal Settings</h3>
+                    <input type="number" id="minWithdrawAmount" placeholder="Minimum Withdrawal Amount (Rs)">
+                    <button onclick="updateWithdrawSettings()" style="width:100%;"><i class="fas fa-save"></i> Save Withdrawal Settings</button>
+                </div>
+                
+                <div class="settings-box">
+                    <h3><i class="fas fa-percent"></i> Commission Settings</h3>
+                    <input type="number" id="commissionPercent" placeholder="Referral Commission (%)" step="0.5">
+                    <button onclick="updateCommissionSettings()" style="width:100%;"><i class="fas fa-save"></i> Save Commission Settings</button>
+                </div>
+                
+                <div class="settings-box">
+                    <h3><i class="fab fa-whatsapp"></i> Support Settings</h3>
+                    <input type="text" id="whatsappNumber" placeholder="WhatsApp Group/Number Link">
+                    <button onclick="updateSupportSettings()" style="width:100%;"><i class="fas fa-save"></i> Save Support Settings</button>
+                </div>
+            </div>
+            
+            <!-- Notifications -->
             <div id="notificationsSection" class="section">
                 <div class="notification-box">
-                    <h3 style="color:#00a859; margin-bottom:20px;"><i class="fas fa-bell"></i> Send New Notification</h3>
+                    <h3><i class="fas fa-bell"></i> Send New Notification</h3>
                     <input type="text" id="notifTitle" placeholder="Notification Title">
                     <textarea id="notifMessage" placeholder="Notification Message..."></textarea>
                     <button onclick="sendNotification()" style="width:100%; background:#00a859;"><i class="fas fa-paper-plane"></i> Send to All Users</button>
                 </div>
-                
                 <div class="notification-list">
-                    <h3 style="color:#00a859; margin-bottom:15px;"><i class="fas fa-list"></i> All Notifications <span style="font-size:12px;">(Click Edit to modify, Delete to remove)</span></h3>
+                    <h3><i class="fas fa-list"></i> All Notifications</h3>
                     <div id="sentNotificationsList"></div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Management Modal -->
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <h3 id="userModalTitle"><i class="fas fa-user-cog"></i> Manage User</h3>
+        <div id="userDetails" class="user-detail-box"></div>
+        <h4 style="color:#00a859; margin:15px 0 10px 0;">Update Balance</h4>
+        <div class="balance-control">
+            <select id="balanceType"><option value="depositBalance">Deposit Balance</option><option value="balance">Profit Balance</option></select>
+            <select id="actionType"><option value="add">Add (+)</option><option value="remove">Remove (-)</option></select>
+            <input type="number" id="balanceAmount" placeholder="Amount">
+        </div>
+        <button onclick="updateUserBalance()" style="width:100%; background:#3498db;"><i class="fas fa-plus-circle"></i> Update Balance</button>
+        <h4 style="color:#00a859; margin:15px 0 10px 0;">User Actions</h4>
+        <div class="modal-buttons">
+            <button id="toggleStatusBtn" onclick="toggleUserStatus()"><i class="fas fa-ban"></i> Block User</button>
+            <button onclick="resetUserPassword()" style="background:#f39c12;"><i class="fas fa-key"></i> Reset Password</button>
+            <button onclick="deleteUser()" style="background:#e74c3c;"><i class="fas fa-trash"></i> Delete User</button>
+        </div>
+        <div class="modal-buttons" style="margin-top:10px;">
+            <button onclick="closeUserModal()" style="background:#555;"><i class="fas fa-times"></i> Close</button>
         </div>
     </div>
 </div>
@@ -379,10 +285,7 @@
         <input type="number" id="planProfit" placeholder="Daily Profit (Rs)">
         <input type="number" id="planDays" placeholder="Duration (Days)">
         <input type="text" id="planVideo" placeholder="Video Link (optional)">
-        <div style="display:flex; gap:10px;">
-            <button onclick="savePlan()" style="flex:1;">Save</button>
-            <button onclick="closePlanModal()" style="flex:1; background:#e74c3c;">Cancel</button>
-        </div>
+        <div class="modal-buttons"><button onclick="savePlan()">Save</button><button onclick="closePlanModal()" style="background:#e74c3c;">Cancel</button></div>
     </div>
 </div>
 
@@ -392,33 +295,30 @@
         <h3><i class="fas fa-edit"></i> Edit Notification</h3>
         <input type="text" id="editNotifTitle" placeholder="Title">
         <textarea id="editNotifMessage" placeholder="Message"></textarea>
-        <div style="display:flex; gap:10px;">
-            <button onclick="updateNotification()" style="flex:1; background:#3498db;">Update</button>
-            <button onclick="closeEditModal()" style="flex:1; background:#e74c3c;">Cancel</button>
-        </div>
+        <div class="modal-buttons"><button onclick="updateNotification()" style="background:#3498db;">Update</button><button onclick="closeEditModal()" style="background:#e74c3c;">Cancel</button></div>
     </div>
 </div>
 
 <script>
     const firebaseConfig = {
-        apiKey: "AIzaSyBIwUsxyeQmoeT2ctH2LxqRU__dhqp9s94",
+        apiKey: "AIzaSyD5DvpTiKztjQ_RivjOHqEsNh9K6MMFQJI",
         authDomain: "kharal-b47b6.firebaseapp.com",
         databaseURL: "https://kharal-b47b6-default-rtdb.firebaseio.com",
         projectId: "kharal-b47b6",
-        storageBucket: "kharal-b47b6.appspot.com",
+        storageBucket: "kharal-b47b6.firebasestorage.app",
         messagingSenderId: "528214841740",
-        appId: "1:528214841740:web:e394a574ef2ba2c16e9ea9"
+        appId: "1:528214841740:web:9b50ad13927e26c66e9ea9"
     };
     
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     
     const auth = firebase.auth();
     const db = firebase.database();
     let currentAdmin = null;
     let editingPlanId = null;
     let editingNotifId = null;
+    let selectedUserId = null;
+    let selectedUserData = null;
     
     function showToast(msg) {
         const toast = document.createElement('div');
@@ -433,14 +333,43 @@
         msgDiv.innerHTML = msg;
         msgDiv.className = 'message ' + type;
         msgDiv.style.display = 'block';
-        setTimeout(() => msgDiv.style.display = 'none', 3000);
+        setTimeout(() => msgDiv.style.display = 'none', 5000);
+    }
+    
+    async function autoCreateAdmin() {
+        const email = "admin@pakearn.com";
+        const password = "Admin@123";
+        showMessage("Creating admin account...", "info");
+        try {
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            await db.ref('admins/' + userCredential.user.uid).set({ email: email, role: 'super_admin', createdAt: new Date().toLocaleString() });
+            showMessage("✅ Admin created successfully! Now click LOGIN.", "success");
+            document.getElementById('autoCreateBox').style.display = 'none';
+        } catch (err) {
+            if (err.code === 'auth/email-already-in-use') {
+                showMessage("⚠️ Admin already exists! Just click LOGIN.", "info");
+                document.getElementById('autoCreateBox').style.display = 'none';
+            } else if (err.code === 'auth/operation-not-allowed') {
+                showMessage("❌ Email/Password authentication is disabled! Please enable it in Firebase Console.", "error");
+            } else {
+                showMessage("❌ Error: " + err.message, "error");
+            }
+        }
+    }
+    
+    async function checkAndShowAutoCreate() {
+        try {
+            const adminsSnap = await db.ref('admins').once('value');
+            if (!adminsSnap.exists()) document.getElementById('autoCreateBox').style.display = 'block';
+            else document.getElementById('autoCreateBox').style.display = 'none';
+        } catch (err) { console.log("Check error:", err); }
     }
     
     async function adminLogin() {
         const email = document.getElementById('adminEmail').value;
         const password = document.getElementById('adminPassword').value;
         if (!email || !password) { showMessage("Enter email and password", "error"); return; }
-        
+        showMessage("Logging in...", "info");
         try {
             const userCredential = await auth.signInWithEmailAndPassword(email, password);
             currentAdmin = userCredential.user;
@@ -455,24 +384,46 @@
             loadDeposits();
             loadWithdrawals();
             loadPlans();
+            loadSettings();
             loadNotifications();
             showToast("Welcome Admin!");
-        } catch (err) { showMessage("Login Failed: " + err.message, "error"); }
+        } catch (err) {
+            if (err.code === 'auth/user-not-found') {
+                showMessage("Admin account not found! Click 'Create Admin Account' button above.", "error");
+                checkAndShowAutoCreate();
+            } else if (err.code === 'auth/wrong-password') {
+                showMessage("Wrong password! Use: Admin@123", "error");
+            } else if (err.code === 'auth/operation-not-allowed') {
+                showMessage("❌ Email/Password authentication is disabled! Please enable it in Firebase Console.", "error");
+            } else {
+                showMessage("Login Failed: " + err.message, "error");
+            }
+        }
     }
     
-    function adminLogout() { auth.signOut(); currentAdmin = null; document.getElementById('loginPage').style.display = 'flex'; document.getElementById('adminPanel').style.display = 'none'; }
+    function adminLogout() {
+        auth.signOut();
+        currentAdmin = null;
+        document.getElementById('loginPage').style.display = 'flex';
+        document.getElementById('adminPanel').style.display = 'none';
+        checkAndShowAutoCreate();
+    }
     
     function showSection(section) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
         document.getElementById(section + 'Section').classList.add('active');
         event.target.closest('.menu-item').classList.add('active');
-        document.getElementById('sectionTitle').innerText = section.charAt(0).toUpperCase() + section.slice(1);
+        let title = section.charAt(0).toUpperCase() + section.slice(1);
+        if (section === 'users') title = 'User Management';
+        if (section === 'settings') title = 'Settings';
+        document.getElementById('sectionTitle').innerText = title;
         if (section === 'dashboard') loadDashboard();
         if (section === 'users') loadUsers();
         if (section === 'deposits') loadDeposits();
         if (section === 'withdrawals') loadWithdrawals();
         if (section === 'plans') loadPlans();
+        if (section === 'settings') loadSettings();
         if (section === 'notifications') loadNotifications();
     }
     
@@ -480,13 +431,18 @@
         const usersSnap = await db.ref('users').once('value');
         const users = usersSnap.val() || {};
         document.getElementById('totalUsers').innerText = Object.keys(users).length;
-        
+        let totalDepositBal = 0, totalProfitBal = 0;
+        Object.values(users).forEach(u => {
+            totalDepositBal += (u.depositBalance || 0);
+            totalProfitBal += (u.balance || 0);
+        });
+        document.getElementById('totalDepositBal').innerText = `Rs ${totalDepositBal.toFixed(2)}`;
+        document.getElementById('totalProfitBal').innerText = `Rs ${totalProfitBal.toFixed(2)}`;
         const depositsSnap = await db.ref('deposits').once('value');
         const deposits = depositsSnap.val() || {};
         let pendingDeposits = 0;
         Object.values(deposits).forEach(d => { if (d.status === 'pending') pendingDeposits++; });
         document.getElementById('pendingDeposits').innerText = pendingDeposits;
-        
         const withdrawalsSnap = await db.ref('withdrawals').once('value');
         const withdrawals = withdrawalsSnap.val() || {};
         let pendingWithdrawals = 0;
@@ -500,17 +456,88 @@
         const tbody = document.getElementById('usersList');
         tbody.innerHTML = '';
         for (const [uid, u] of Object.entries(users)) {
-            tbody.innerHTML += `<tr><td>${u.username || 'N/A'}</td><td>${u.email || 'N/A'}</td><td>${u.phone || 'N/A'}</td><td>Rs ${(u.depositBalance || 0).toFixed(2)}</td><td>Rs ${(u.balance || 0).toFixed(2)}</td><td><span class="${u.status === 'blocked' ? 'status-pending' : 'status-approved'}">${u.status || 'active'}</span></td><td><button onclick="toggleUserStatus('${uid}')">${u.status === 'blocked' ? 'Unblock' : 'Block'}</button></td></tr>`;
+            if (uid === currentAdmin?.uid) continue;
+            tbody.innerHTML += `<tr><td>${u.username || 'N/A'}</td><td>${u.email || 'N/A'}</td><td>${u.phone || 'N/A'}</td><td>Rs ${(u.depositBalance || 0).toFixed(2)}</td><td>Rs ${(u.balance || 0).toFixed(2)}</td><td><span class="${u.status === 'blocked' ? 'status-pending' : 'status-approved'}">${u.status || 'active'}</span></td><td><button class="btn-edit" onclick="openUserModal('${uid}')"><i class="fas fa-edit"></i> Manage</button></td></tr>`;
+        }
+        if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No users found</td></tr>';
+    }
+    
+    function searchUsers() {
+        const searchTerm = document.getElementById('searchUserInput').value.toLowerCase();
+        db.ref('users').once('value', snap => {
+            const users = snap.val() || {};
+            const tbody = document.getElementById('usersList');
+            tbody.innerHTML = '';
+            for (const [uid, u] of Object.entries(users)) {
+                if (uid === currentAdmin?.uid) continue;
+                if (u.username?.toLowerCase().includes(searchTerm) || u.email?.toLowerCase().includes(searchTerm) || u.phone?.includes(searchTerm)) {
+                    tbody.innerHTML += `<tr><td>${u.username || 'N/A'}</td><td>${u.email || 'N/A'}</td><td>${u.phone || 'N/A'}</td><td>Rs ${(u.depositBalance || 0).toFixed(2)}</td><td>Rs ${(u.balance || 0).toFixed(2)}</td><td><span class="${u.status === 'blocked' ? 'status-pending' : 'status-approved'}">${u.status || 'active'}</span></td><td><button class="btn-edit" onclick="openUserModal('${uid}')"><i class="fas fa-edit"></i> Manage</button></td></tr>`;
+                }
+            }
+            if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No users found</td></tr>';
+        });
+    }
+    
+    async function openUserModal(uid) {
+        selectedUserId = uid;
+        const userSnap = await db.ref('users/' + uid).once('value');
+        selectedUserData = userSnap.val();
+        document.getElementById('userModalTitle').innerHTML = `<i class="fas fa-user"></i> Manage: ${selectedUserData.username || 'User'}`;
+        document.getElementById('userDetails').innerHTML = `<p><strong>📧 Email:</strong> ${selectedUserData.email || 'N/A'}</p><p><strong>📱 Phone:</strong> ${selectedUserData.phone || 'N/A'}</p><p><strong>💰 Deposit Balance:</strong> Rs ${(selectedUserData.depositBalance || 0).toFixed(2)}</p><p><strong>💵 Profit Balance:</strong> Rs ${(selectedUserData.balance || 0).toFixed(2)}</p><p><strong>📅 Joined:</strong> ${selectedUserData.joinedDate || 'N/A'}</p><p><strong>🔗 Referred By:</strong> ${selectedUserData.referredBy || 'none'}</p>`;
+        const toggleBtn = document.getElementById('toggleStatusBtn');
+        if (selectedUserData.status === 'blocked') {
+            toggleBtn.innerHTML = '<i class="fas fa-check-circle"></i> Unblock User';
+            toggleBtn.style.background = '#2ecc71';
+        } else {
+            toggleBtn.innerHTML = '<i class="fas fa-ban"></i> Block User';
+            toggleBtn.style.background = '#e74c3c';
+        }
+        document.getElementById('balanceAmount').value = '';
+        document.getElementById('userModal').style.display = 'flex';
+    }
+    
+    function closeUserModal() { document.getElementById('userModal').style.display = 'none'; selectedUserId = null; selectedUserData = null; }
+    
+    async function updateUserBalance() {
+        const balanceType = document.getElementById('balanceType').value;
+        const action = document.getElementById('actionType').value;
+        const amount = parseFloat(document.getElementById('balanceAmount').value);
+        if (isNaN(amount) || amount <= 0) { showToast("Enter valid amount"); return; }
+        const currentBalance = selectedUserData[balanceType] || 0;
+        let newBalance = action === 'add' ? currentBalance + amount : currentBalance - amount;
+        if (newBalance < 0) newBalance = 0;
+        await db.ref('users/' + selectedUserId).update({ [balanceType]: newBalance });
+        showToast(`Balance updated! New ${balanceType === 'depositBalance' ? 'Deposit' : 'Profit'} Balance: Rs ${newBalance.toFixed(2)}`);
+        closeUserModal();
+        loadUsers();
+    }
+    
+    async function toggleUserStatus() {
+        const newStatus = selectedUserData.status === 'blocked' ? 'active' : 'blocked';
+        await db.ref('users/' + selectedUserId).update({ status: newStatus });
+        showToast(`User ${newStatus === 'blocked' ? 'blocked' : 'unblocked'}!`);
+        closeUserModal();
+        loadUsers();
+    }
+    
+    async function resetUserPassword() {
+        if (!selectedUserData.email) { showToast("No email found for this user"); return; }
+        if (confirm(`Send password reset email to ${selectedUserData.email}?`)) {
+            try {
+                await auth.sendPasswordResetEmail(selectedUserData.email);
+                showToast(`Password reset email sent to ${selectedUserData.email}`);
+            } catch (err) { showToast("Error: " + err.message); }
         }
     }
     
-    async function toggleUserStatus(uid) {
-        const userSnap = await db.ref('users/' + uid).once('value');
-        const user = userSnap.val();
-        const newStatus = user.status === 'blocked' ? 'active' : 'blocked';
-        await db.ref('users/' + uid).update({ status: newStatus });
-        loadUsers();
-        showToast(`User ${newStatus === 'blocked' ? 'blocked' : 'unblocked'}!`);
+    async function deleteUser() {
+        if (confirm(`⚠️ WARNING: This will permanently delete user "${selectedUserData.username}". This action cannot be undone! Are you sure?`)) {
+            await db.ref('users/' + selectedUserId).remove();
+            showToast("User deleted successfully!");
+            closeUserModal();
+            loadUsers();
+            loadDashboard();
+        }
     }
     
     async function loadDeposits() {
@@ -528,7 +555,7 @@
         await db.ref('deposits/' + did).update({ status: 'approved' });
         const userSnap = await db.ref('users/' + uid).once('value');
         const user = userSnap.val();
-        await db.ref('users/' + uid').update({ depositBalance: (user.depositBalance || 0) + amount, hasDeposited: true });
+        await db.ref('users/' + uid).update({ depositBalance: (user.depositBalance || 0) + amount, hasDeposited: true });
         if (referredBy && referredBy !== "none") {
             const refSnap = await db.ref('users/' + referredBy).once('value');
             const referrer = refSnap.val();
@@ -543,12 +570,7 @@
         showToast("Deposit approved!");
     }
     
-    async function rejectDeposit(did) {
-        if (!confirm("Reject this deposit?")) return;
-        await db.ref('deposits/' + did).update({ status: 'rejected' });
-        loadDeposits();
-        showToast("Deposit rejected!");
-    }
+    async function rejectDeposit(did) { if (!confirm("Reject this deposit?")) return; await db.ref('deposits/' + did).update({ status: 'rejected' }); loadDeposits(); showToast("Deposit rejected!"); }
     
     async function loadWithdrawals() {
         const withdrawalsSnap = await db.ref('withdrawals').once('value');
@@ -560,22 +582,9 @@
         }
     }
     
-    async function approveWithdraw(wid) {
-        if (!confirm("Approve this withdrawal?")) return;
-        await db.ref('withdrawals/' + wid).update({ status: 'approved' });
-        loadWithdrawals();
-        showToast("Withdrawal approved!");
-    }
+    async function approveWithdraw(wid) { if (!confirm("Approve this withdrawal?")) return; await db.ref('withdrawals/' + wid).update({ status: 'approved' }); loadWithdrawals(); showToast("Withdrawal approved!"); }
     
-    async function rejectWithdraw(wid, amount, uid) {
-        if (!confirm("Reject this withdrawal? Amount will be returned.")) return;
-        await db.ref('withdrawals/' + wid).update({ status: 'rejected' });
-        const userSnap = await db.ref('users/' + uid).once('value');
-        const user = userSnap.val();
-        await db.ref('users/' + uid).update({ balance: (user.balance || 0) + amount });
-        loadWithdrawals();
-        showToast("Withdrawal rejected! Amount returned.");
-    }
+    async function rejectWithdraw(wid, amount, uid) { if (!confirm("Reject this withdrawal? Amount will be returned.")) return; await db.ref('withdrawals/' + wid).update({ status: 'rejected' }); const userSnap = await db.ref('users/' + uid).once('value'); const user = userSnap.val(); await db.ref('users/' + uid).update({ balance: (user.balance || 0) + amount }); loadWithdrawals(); showToast("Withdrawal rejected! Amount returned."); }
     
     async function loadPlans() {
         const plansSnap = await db.ref('plans').once('value');
@@ -583,7 +592,7 @@
         const tbody = document.getElementById('plansList');
         tbody.innerHTML = '';
         for (const [pid, p] of Object.entries(plans)) {
-            tbody.innerHTML += `<tr><td>${p.type || p.name || 'Plan'}</td><td>Rs ${p.investment}</td><td>Rs ${p.dailyProfit}</td><td>${p.days || 1} Days</td><td><button class="btn-edit" onclick="editPlan('${pid}', '${p.type || p.name}', ${p.investment}, ${p.dailyProfit}, ${p.days || 1}, '${p.videoLink || ''}')">Edit</button><button class="btn-delete" onclick="deletePlan('${pid}')">Delete</button></td></tr>`;
+            tbody.innerHTML += `<td>${p.type || p.name || 'Plan'}</td><td>Rs ${p.investment}</td><td>Rs ${p.dailyProfit}</td><td>${p.days || 1} Days</td><td><button class="btn-edit" onclick="editPlan('${pid}', '${p.type || p.name}', ${p.investment}, ${p.dailyProfit}, ${p.days || 1}, '${p.videoLink || ''}')">Edit</button><button class="btn-delete" onclick="deletePlan('${pid}')">Delete</button></td></tr>`;
         }
     }
     
@@ -617,21 +626,62 @@
     
     async function deletePlan(pid) { if (!confirm("Delete this plan?")) return; await db.ref('plans/' + pid).remove(); loadPlans(); showToast("Plan deleted!"); }
     
-    // ============ NOTIFICATION FUNCTIONS WITH EDIT/DELETE ============
+    // Settings Functions
+    async function loadSettings() {
+        const settingsSnap = await db.ref('settings').once('value');
+        const settings = settingsSnap.val() || {};
+        document.getElementById('qrUrlInput').value = settings.qrUrl || '';
+        document.getElementById('currentQrImage').src = settings.qrUrl || 'https://i.postimg.cc/C1dk468X/IMG-20260406-WA0034.jpg';
+        document.getElementById('easypaisaNumber').value = settings.easypaisaNumber || '';
+        document.getElementById('jazzcashNumber').value = settings.jazzcashNumber || '';
+        document.getElementById('bankDetails').value = settings.bankDetails || '';
+        document.getElementById('minWithdrawAmount').value = settings.minWithdraw || 10000;
+        document.getElementById('commissionPercent').value = settings.commissionPercent || 5;
+        document.getElementById('whatsappNumber').value = settings.whatsappNumber || 'https://chat.whatsapp.com/EBHZJaJsGqaKN009GQdNHA';
+    }
     
+    async function updateQRSettings() {
+        const qrUrl = document.getElementById('qrUrlInput').value;
+        if (!qrUrl) { showToast("Please enter QR code image URL"); return; }
+        await db.ref('settings').update({ qrUrl: qrUrl });
+        document.getElementById('currentQrImage').src = qrUrl;
+        showToast("QR Code updated successfully!");
+    }
+    
+    async function updatePaymentSettings() {
+        const easypaisa = document.getElementById('easypaisaNumber').value;
+        const jazzcash = document.getElementById('jazzcashNumber').value;
+        const bank = document.getElementById('bankDetails').value;
+        await db.ref('settings').update({ easypaisaNumber: easypaisa, jazzcashNumber: jazzcash, bankDetails: bank });
+        showToast("Payment settings saved!");
+    }
+    
+    async function updateWithdrawSettings() {
+        const minWithdraw = parseFloat(document.getElementById('minWithdrawAmount').value);
+        if (isNaN(minWithdraw)) { showToast("Enter valid amount"); return; }
+        await db.ref('settings').update({ minWithdraw: minWithdraw });
+        showToast(`Minimum withdrawal amount set to Rs ${minWithdraw}`);
+    }
+    
+    async function updateCommissionSettings() {
+        const commission = parseFloat(document.getElementById('commissionPercent').value);
+        if (isNaN(commission)) { showToast("Enter valid percentage"); return; }
+        await db.ref('settings').update({ commissionPercent: commission });
+        showToast(`Commission set to ${commission}%`);
+    }
+    
+    async function updateSupportSettings() {
+        const whatsapp = document.getElementById('whatsappNumber').value;
+        await db.ref('settings').update({ whatsappNumber: whatsapp });
+        showToast("Support settings saved!");
+    }
+    
+    // Notification Functions
     async function sendNotification() {
         const title = document.getElementById('notifTitle').value;
         const message = document.getElementById('notifMessage').value;
         if (!title || !message) { showToast("Please enter both title and message"); return; }
-        
-        const notificationData = {
-            title: title,
-            message: message,
-            date: new Date().toLocaleString(),
-            timestamp: Date.now(),
-            from: 'admin'
-        };
-        
+        const notificationData = { title: title, message: message, date: new Date().toLocaleString(), timestamp: Date.now(), from: 'admin' };
         try {
             await db.ref('notifications').push(notificationData);
             document.getElementById('notifTitle').value = '';
@@ -645,103 +695,34 @@
         const notifSnap = await db.ref('notifications').once('value');
         const notifications = notifSnap.val() || {};
         const container = document.getElementById('sentNotificationsList');
-        
-        if (Object.keys(notifications).length === 0) {
-            container.innerHTML = '<div style="text-align:center; padding:40px; color:#8b92a8;">No notifications sent yet</div>';
-            return;
-        }
-        
+        if (Object.keys(notifications).length === 0) { container.innerHTML = '<div style="text-align:center; padding:40px; color:#8b92a8;">No notifications sent yet</div>'; return; }
         const sorted = Object.entries(notifications).sort((a,b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
         container.innerHTML = '';
-        
         for (const [nid, notif] of sorted) {
-            container.innerHTML += `
-                <div class="notification-item" id="notif-${nid}">
-                    <div class="notification-actions">
-                        <button class="btn-edit" onclick="openEditModal('${nid}', '${escapeHtml(notif.title)}', '${escapeHtml(notif.message)}')"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn-delete" onclick="deleteNotification('${nid}')"><i class="fas fa-trash"></i> Delete</button>
-                    </div>
-                    <div class="title">${escapeHtml(notif.title)}</div>
-                    <div class="msg">${escapeHtml(notif.message)}</div>
-                    <div class="date"><i class="far fa-clock"></i> ${notif.date || 'Unknown date'}</div>
-                </div>
-            `;
+            container.innerHTML += `<div class="notification-item"><div class="notification-actions"><button class="btn-edit" onclick="openEditModal('${nid}', '${escapeHtml(notif.title)}', '${escapeHtml(notif.message)}')"><i class="fas fa-edit"></i> Edit</button><button class="btn-delete" onclick="deleteNotification('${nid}')"><i class="fas fa-trash"></i> Delete</button></div><div class="title">${escapeHtml(notif.title)}</div><div class="msg">${escapeHtml(notif.message)}</div><div class="date"><i class="far fa-clock"></i> ${notif.date || 'Unknown date'}</div></div>`;
         }
     }
     
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
-        });
-    }
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
     
-    function openEditModal(nid, title, message) {
-        editingNotifId = nid;
-        document.getElementById('editNotifTitle').value = title;
-        document.getElementById('editNotifMessage').value = message;
-        document.getElementById('editNotifModal').style.display = 'flex';
-    }
-    
-    function closeEditModal() {
-        document.getElementById('editNotifModal').style.display = 'none';
-        editingNotifId = null;
-    }
+    function openEditModal(nid, title, message) { editingNotifId = nid; document.getElementById('editNotifTitle').value = title; document.getElementById('editNotifMessage').value = message; document.getElementById('editNotifModal').style.display = 'flex'; }
+    function closeEditModal() { document.getElementById('editNotifModal').style.display = 'none'; editingNotifId = null; }
     
     async function updateNotification() {
         const newTitle = document.getElementById('editNotifTitle').value;
         const newMessage = document.getElementById('editNotifMessage').value;
-        
-        if (!newTitle || !newMessage) {
-            showToast("Please enter both title and message");
-            return;
-        }
-        
+        if (!newTitle || !newMessage) { showToast("Please enter both title and message"); return; }
         try {
-            await db.ref('notifications/' + editingNotifId).update({
-                title: newTitle,
-                message: newMessage,
-                editedAt: new Date().toLocaleString()
-            });
+            await db.ref('notifications/' + editingNotifId).update({ title: newTitle, message: newMessage, editedAt: new Date().toLocaleString() });
             closeEditModal();
             loadNotifications();
             showToast("Notification updated successfully!");
-        } catch (err) {
-            showToast("Error updating: " + err.message);
-        }
+        } catch (err) { showToast("Error updating: " + err.message); }
     }
     
-    async function deleteNotification(nid) {
-        if (!confirm("Are you sure you want to delete this notification? This action cannot be undone!")) return;
-        
-        try {
-            await db.ref('notifications/' + nid).remove();
-            loadNotifications();
-            showToast("Notification deleted successfully!");
-        } catch (err) {
-            showToast("Error deleting: " + err.message);
-        }
-    }
+    async function deleteNotification(nid) { if (!confirm("Delete this notification?")) return; try { await db.ref('notifications/' + nid).remove(); loadNotifications(); showToast("Notification deleted!"); } catch (err) { showToast("Error: " + err.message); } }
     
-    // Auto create default admin
-    async function setupDefaultAdmin() {
-        try {
-            const adminCheck = await db.ref('admins').once('value');
-            if (!adminCheck.exists()) {
-                try {
-                    const userCred = await auth.createUserWithEmailAndPassword('admin@pakearn.com', 'Admin@123');
-                    await db.ref('admins/' + userCred.user.uid).set({ email: 'admin@pakearn.com', role: 'super_admin', createdAt: new Date().toLocaleString() });
-                } catch (err) { console.log('Admin may already exist'); }
-            }
-        } catch (err) { console.log('Setup error:', err.message); }
-    }
-    
-    setupDefaultAdmin();
+    checkAndShowAutoCreate();
 </script>
 </body>
 </html>

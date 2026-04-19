@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HARRY LINE - Admin Panel</title>
+    
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #0a0f1e, #1a1a2e);
+            background: #0a0c15;
             min-height: 100vh;
         }
 
@@ -28,22 +30,25 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #0a0f1e, #1a1a2e);
+            background: linear-gradient(135deg, #0a0c15 0%, #1a1a2e 100%);
             padding: 20px;
         }
 
         .login-card {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.03);
             backdrop-filter: blur(10px);
             padding: 40px;
-            border-radius: 30px;
+            border-radius: 24px;
             width: 100%;
-            max-width: 400px;
-            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 420px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .login-card h2 {
-            color: #00a859;
+            background: linear-gradient(135deg, #00d4ff, #00a859);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             text-align: center;
             margin-bottom: 30px;
             font-size: 28px;
@@ -51,25 +56,38 @@
 
         .login-card input {
             width: 100%;
-            padding: 15px;
+            padding: 14px 16px;
             margin-bottom: 15px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
             color: white;
-            font-size: 16px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .login-card input:focus {
+            outline: none;
+            border-color: #00a859;
+            background: rgba(255,255,255,0.08);
         }
 
         .login-card button {
             width: 100%;
-            padding: 15px;
+            padding: 14px;
             background: linear-gradient(135deg, #00a859, #008040);
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             color: white;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-card button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,168,89,0.3);
         }
 
         .error-msg {
@@ -81,6 +99,25 @@
             margin-top: 15px;
             display: none;
             font-size: 13px;
+        }
+
+        .auto-create-box {
+            background: rgba(46,204,113,0.1);
+            border: 1px solid #2ed573;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .auto-create-btn {
+            background: #2ed573;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
         }
 
         /* Admin Panel */
@@ -106,7 +143,10 @@
         }
 
         .sidebar-header h3 {
-            color: #00a859;
+            background: linear-gradient(135deg, #00d4ff, #00a859);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             font-size: 20px;
         }
 
@@ -274,9 +314,6 @@
         .btn-reject { background: #e74c3c; }
         .btn-edit { background: #3498db; }
         .btn-delete { background: #e74c3c; }
-        .btn-block { background: #e74c3c; }
-        .btn-unblock { background: #2ed573; }
-        .btn-add { background: #2ed573; }
 
         .status-pending {
             background: rgba(255,165,0,0.2);
@@ -344,11 +381,6 @@
             color: white;
         }
 
-        .modal-content textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
         .modal-buttons {
             display: flex;
             gap: 10px;
@@ -410,25 +442,6 @@
             0% { opacity: 1; }
             70% { opacity: 1; }
             100% { opacity: 0; visibility: hidden; }
-        }
-
-        .auto-create-box {
-            background: rgba(46,204,113,0.1);
-            border: 1px solid #2ed573;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .auto-create-btn {
-            background: #2ed573;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -509,33 +522,18 @@
             <button class="logout-btn" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
 
-        <!-- Dashboard Section -->
+        <!-- Dashboard -->
         <div id="dashboardSection" class="section active">
             <div class="stats-grid">
-                <div class="stat-card">
-                    <h4><i class="fas fa-users"></i> Total Users</h4>
-                    <div class="value" id="totalUsers">0</div>
-                </div>
-                <div class="stat-card">
-                    <h4><i class="fas fa-clock"></i> Pending Deposits</h4>
-                    <div class="value" id="pendingDeposits">0</div>
-                </div>
-                <div class="stat-card">
-                    <h4><i class="fas fa-clock"></i> Pending Withdrawals</h4>
-                    <div class="value" id="pendingWithdrawals">0</div>
-                </div>
-                <div class="stat-card">
-                    <h4><i class="fas fa-chart-line"></i> Total Deposit Balance</h4>
-                    <div class="value" id="totalDepositBal">$0</div>
-                </div>
-                <div class="stat-card">
-                    <h4><i class="fas fa-chart-line"></i> Total Profit Balance</h4>
-                    <div class="value" id="totalProfitBal">$0</div>
-                </div>
+                <div class="stat-card"><h4>Total Users</h4><div class="value" id="totalUsers">0</div></div>
+                <div class="stat-card"><h4>Pending Deposits</h4><div class="value" id="pendingDeposits">0</div></div>
+                <div class="stat-card"><h4>Pending Withdrawals</h4><div class="value" id="pendingWithdrawals">0</div></div>
+                <div class="stat-card"><h4>Total Deposit Balance</h4><div class="value" id="totalDepositBal">$0</div></div>
+                <div class="stat-card"><h4>Total Profit Balance</h4><div class="value" id="totalProfitBal">$0</div></div>
             </div>
         </div>
 
-        <!-- Users Management Section -->
+        <!-- Users Management -->
         <div id="usersSection" class="section">
             <div class="search-box">
                 <input type="text" id="searchUser" placeholder="Search by name, email or phone...">
@@ -544,73 +542,64 @@
             </div>
             <div style="overflow-x: auto;">
                 <table>
-                    <thead>
-                        <tr><th>Name</th><th>Email</th><th>Phone</th><th>Deposit Bal</th><th>Profit Bal</th><th>Status</th><th>Actions</th></tr>
-                    </thead>
+                    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Deposit Bal</th><th>Profit Bal</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody id="usersList"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Deposit Requests Section -->
+        <!-- Deposits -->
         <div id="depositsSection" class="section">
             <div style="overflow-x: auto;">
                 <table>
-                    <thead>
-                        <tr><th>User</th><th>Amount</th><th>Binance Txn ID</th><th>Screenshot</th><th>Date</th><th>Status</th><th>Actions</th></tr>
-                    </thead>
+                    <thead><tr><th>User</th><th>Amount</th><th>Binance Txn ID</th><th>Screenshot</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody id="depositsList"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Withdrawal Requests Section -->
+        <!-- Withdrawals -->
         <div id="withdrawalsSection" class="section">
             <div style="overflow-x: auto;">
                 <table>
-                    <thead>
-                        <tr><th>User</th><th>Amount</th><th>Method</th><th>Account</th><th>Date</th><th>Status</th><th>Actions</th></tr>
-                    </thead>
+                    <thead><tr><th>User</th><th>Amount</th><th>Method</th><th>Account</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody id="withdrawalsList"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Investment Plans Section -->
+        <!-- Plans -->
         <div id="plansSection" class="section">
             <button onclick="openPlanModal()" style="margin-bottom:20px;"><i class="fas fa-plus"></i> Add New Plan</button>
             <div style="overflow-x: auto;">
                 <table>
-                    <thead>
-                        <tr><th>Name</th><th>Investment ($)</th><th>Daily Profit ($)</th><th>Duration</th><th>Video Link</th><th>Actions</th></tr>
-                    </thead>
+                    <thead><tr><th>Name</th><th>Investment ($)</th><th>Daily Profit ($)</th><th>Duration</th><th>Video Link</th><th>Actions</th></tr></thead>
                     <tbody id="plansList"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Notifications Section -->
+        <!-- Notifications -->
         <div id="notificationsSection" class="section">
-            <div style="background: #1a1f2e; border-radius: 15px; padding: 20px; margin-bottom: 20px;">
-                <h3 style="color:#00a859; margin-bottom:15px;"><i class="fas fa-paper-plane"></i> Send Notification</h3>
+            <div style="background:#1a1f2e; border-radius:15px; padding:20px; margin-bottom:20px;">
+                <h3 style="color:#00a859; margin-bottom:15px;">Send Notification</h3>
                 <input type="text" id="notifTitle" placeholder="Notification Title" style="width:100%; padding:12px; margin-bottom:15px; background:#0f1422; border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:white;">
                 <textarea id="notifMessage" placeholder="Notification Message" rows="3" style="width:100%; padding:12px; margin-bottom:15px; background:#0f1422; border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:white;"></textarea>
                 <button onclick="sendNotification()" style="width:100%;">Send to All Users</button>
             </div>
-            <div style="background: #1a1f2e; border-radius: 15px; padding: 20px;">
-                <h3 style="color:#00a859; margin-bottom:15px;"><i class="fas fa-history"></i> Sent Notifications</h3>
-                <div id="notificationsList" style="max-height: 400px; overflow-y: auto;"></div>
+            <div style="background:#1a1f2e; border-radius:15px; padding:20px;">
+                <h3 style="color:#00a859; margin-bottom:15px;">Sent Notifications</h3>
+                <div id="notificationsList" style="max-height:400px; overflow-y:auto;"></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- User Management Modal -->
+<!-- User Modal -->
 <div id="userModal" class="modal">
     <div class="modal-content">
         <h3 id="userModalTitle">Manage User</h3>
         <div id="userDetails" class="user-detail-box"></div>
-        
         <h4 style="color:#00a859; margin-bottom:10px;">Update Balance ($)</h4>
         <div class="balance-control">
             <select id="balanceType">
@@ -624,7 +613,6 @@
             <input type="number" id="balanceAmount" placeholder="Amount in $" step="0.01">
         </div>
         <button onclick="updateUserBalance()" style="width:100%; background:#3498db;">Update Balance</button>
-        
         <h4 style="color:#00a859; margin:15px 0 10px 0;">User Actions</h4>
         <div class="modal-buttons">
             <button id="toggleStatusBtn" onclick="toggleUserStatus()">Block User</button>
@@ -654,14 +642,16 @@
 </div>
 
 <script>
+    // 🔥 NEW FIREBASE CONFIG 🔥
     const firebaseConfig = {
-        apiKey: "AIzaSyBIwUsxyeQmoeT2ctH2LxqRU__dhqp9s94",
-        authDomain: "kharal-b47b6.firebaseapp.com",
-        databaseURL: "https://kharal-b47b6-default-rtdb.firebaseio.com",
-        projectId: "kharal-b47b6",
-        storageBucket: "kharal-b47b6.appspot.com",
-        messagingSenderId: "528214841740",
-        appId: "1:528214841740:web:e394a574ef2ba2c16e9ea9"
+        apiKey: "AIzaSyDzXUUnmQ4rEirDFFI_Xq-zkca29O5kxOg",
+        authDomain: "admin-55316.firebaseapp.com",
+        databaseURL: "https://admin-55316-default-rtdb.firebaseio.com",
+        projectId: "admin-55316",
+        storageBucket: "admin-55316.firebasestorage.app",
+        messagingSenderId: "469097239359",
+        appId: "1:469097239359:web:938445bf183d4e4b30b98a",
+        measurementId: "G-VGCJ4BE7HE"
     };
     
     if (!firebase.apps.length) {
@@ -676,16 +666,10 @@
     let selectedUserId = null;
     let selectedUserData = null;
     
-    // Conversion rate: 1 USD = 280 PKR
     const USD_TO_PKR = 280;
     
-    function pkrToUsd(amount) {
-        return (amount / USD_TO_PKR).toFixed(2);
-    }
-    
-    function usdToPkr(amount) {
-        return amount * USD_TO_PKR;
-    }
+    function pkrToUsd(amount) { return (amount / USD_TO_PKR).toFixed(2); }
+    function usdToPkr(amount) { return amount * USD_TO_PKR; }
     
     function showToast(msg) {
         const toast = document.createElement('div');
@@ -744,35 +728,22 @@
     async function adminLogin() {
         const email = document.getElementById('adminEmail').value;
         const password = document.getElementById('adminPassword').value;
-        
-        if (!email || !password) {
-            showMessage("Enter email and password", "error");
-            return;
-        }
-        
+        if (!email || !password) { showMessage("Enter email and password", "error"); return; }
         try {
             const userCredential = await auth.signInWithEmailAndPassword(email, password);
             currentAdmin = userCredential.user;
-            
             const adminCheck = await db.ref('admins/' + currentAdmin.uid).once('value');
             if (!adminCheck.exists()) {
-                await db.ref('admins/' + currentAdmin.uid).set({
-                    email: email,
-                    role: 'admin',
-                    createdAt: new Date().toLocaleString()
-                });
+                await db.ref('admins/' + currentAdmin.uid).set({ email: email, role: 'admin', createdAt: new Date().toLocaleString() });
             }
-            
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('adminPanel').style.display = 'block';
-            
             loadDashboard();
             loadUsers();
             loadDeposits();
             loadWithdrawals();
             loadPlans();
             loadNotifications();
-            
             showToast("Welcome Admin!");
         } catch (err) {
             if (err.code === 'auth/user-not-found') {
@@ -799,14 +770,12 @@
         document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
         document.getElementById(section + 'Section').classList.add('active');
         event.target.closest('.menu-item').classList.add('active');
-        
         let title = section.charAt(0).toUpperCase() + section.slice(1);
         if (section === 'users') title = 'User Management';
         if (section === 'deposits') title = 'Deposit Requests';
         if (section === 'withdrawals') title = 'Withdrawal Requests';
         if (section === 'plans') title = 'Investment Plans';
         document.getElementById('sectionTitle').innerText = title;
-        
         if (section === 'dashboard') loadDashboard();
         if (section === 'users') loadUsers();
         if (section === 'deposits') loadDeposits();
@@ -820,7 +789,6 @@
         const usersSnap = await db.ref('users').once('value');
         const users = usersSnap.val() || {};
         document.getElementById('totalUsers').innerText = Object.keys(users).length;
-        
         let totalDepositBal = 0, totalProfitBal = 0;
         Object.values(users).forEach(u => {
             totalDepositBal += (u.depositBalance || 0);
@@ -828,13 +796,11 @@
         });
         document.getElementById('totalDepositBal').innerText = `$${pkrToUsd(totalDepositBal)}`;
         document.getElementById('totalProfitBal').innerText = `$${pkrToUsd(totalProfitBal)}`;
-        
         const depositsSnap = await db.ref('deposits').once('value');
         const deposits = depositsSnap.val() || {};
         let pendingDeposits = 0;
         Object.values(deposits).forEach(d => { if (d.status === 'pending') pendingDeposits++; });
         document.getElementById('pendingDeposits').innerText = pendingDeposits;
-        
         const withdrawalsSnap = await db.ref('withdrawals').once('value');
         const withdrawals = withdrawalsSnap.val() || {};
         let pendingWithdrawals = 0;
@@ -848,26 +814,13 @@
         const users = usersSnap.val() || {};
         const tbody = document.getElementById('usersList');
         tbody.innerHTML = '';
-        
         for (const [uid, u] of Object.entries(users)) {
             if (uid === currentAdmin?.uid) continue;
             const statusClass = u.status === 'blocked' ? 'status-blocked' : 'status-approved';
             const statusText = u.status === 'blocked' ? 'Blocked' : 'Active';
-            tbody.innerHTML += `
-                <tr>
-                    <td>${u.username || 'N/A'}</td>
-                    <td>${u.email || 'N/A'}</td>
-                    <td>${u.phone || 'N/A'}</td>
-                    <td>$${pkrToUsd(u.depositBalance || 0)}</td>
-                    <td>$${pkrToUsd(u.balance || 0)}</td>
-                    <td><span class="${statusClass}">${statusText}</span></td>
-                    <td><button class="btn-edit" onclick="openUserModal('${uid}')"><i class="fas fa-edit"></i> Manage</button></td>
-                </tr>
-            `;
+            tbody.innerHTML += `<tr><td>${u.username || 'N/A'}</td><td>${u.email || 'N/A'}</td><td>${u.phone || 'N/A'}</td><td>$${pkrToUsd(u.depositBalance || 0)}</td><td>$${pkrToUsd(u.balance || 0)}</td><td><span class="${statusClass}">${statusText}</span></td><td><button class="btn-edit" onclick="openUserModal('${uid}')">Manage</button></td></tr>`;
         }
-        if (tbody.innerHTML === '') {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No users found</td></tr>';
-        }
+        if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No users found</td></tr>';
     }
     
     function searchUsers() {
@@ -878,27 +831,13 @@
             tbody.innerHTML = '';
             for (const [uid, u] of Object.entries(users)) {
                 if (uid === currentAdmin?.uid) continue;
-                if (u.username?.toLowerCase().includes(searchTerm) || 
-                    u.email?.toLowerCase().includes(searchTerm) || 
-                    u.phone?.includes(searchTerm)) {
+                if (u.username?.toLowerCase().includes(searchTerm) || u.email?.toLowerCase().includes(searchTerm) || u.phone?.includes(searchTerm)) {
                     const statusClass = u.status === 'blocked' ? 'status-blocked' : 'status-approved';
                     const statusText = u.status === 'blocked' ? 'Blocked' : 'Active';
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${u.username || 'N/A'}</td>
-                            <td>${u.email || 'N/A'}</td>
-                            <td>${u.phone || 'N/A'}</td>
-                            <td>$${pkrToUsd(u.depositBalance || 0)}</td>
-                            <td>$${pkrToUsd(u.balance || 0)}</td>
-                            <td><span class="${statusClass}">${statusText}</span></td>
-                            <td><button class="btn-edit" onclick="openUserModal('${uid}')">Manage</button></td>
-                        </tr>
-                    `;
+                    tbody.innerHTML += `<tr><td>${u.username || 'N/A'}</td><td>${u.email || 'N/A'}</td><td>${u.phone || 'N/A'}</td><td>$${pkrToUsd(u.depositBalance || 0)}</td><td>$${pkrToUsd(u.balance || 0)}</td><td><span class="${statusClass}">${statusText}</span></td><td><button class="btn-edit" onclick="openUserModal('${uid}')">Manage</button></td></tr>`;
                 }
             }
-            if (tbody.innerHTML === '') {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No users found</td></tr>';
-            }
+            if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No users found</td></tr>';
         });
     }
     
@@ -906,17 +845,8 @@
         selectedUserId = uid;
         const userSnap = await db.ref('users/' + uid).once('value');
         selectedUserData = userSnap.val();
-        
         document.getElementById('userModalTitle').innerHTML = `<i class="fas fa-user"></i> Manage: ${selectedUserData.username || 'User'}`;
-        document.getElementById('userDetails').innerHTML = `
-            <p><strong>📧 Email:</strong> ${selectedUserData.email || 'N/A'}</p>
-            <p><strong>📱 Phone:</strong> ${selectedUserData.phone || 'N/A'}</p>
-            <p><strong>💰 Deposit Balance:</strong> $${pkrToUsd(selectedUserData.depositBalance || 0)}</p>
-            <p><strong>💵 Profit Balance:</strong> $${pkrToUsd(selectedUserData.balance || 0)}</p>
-            <p><strong>📅 Joined:</strong> ${selectedUserData.joinedDate || 'N/A'}</p>
-            <p><strong>🔗 Referred By:</strong> ${selectedUserData.referredBy || 'none'}</p>
-        `;
-        
+        document.getElementById('userDetails').innerHTML = `<p><strong>📧 Email:</strong> ${selectedUserData.email || 'N/A'}</p><p><strong>📱 Phone:</strong> ${selectedUserData.phone || 'N/A'}</p><p><strong>💰 Deposit Balance:</strong> $${pkrToUsd(selectedUserData.depositBalance || 0)}</p><p><strong>💵 Profit Balance:</strong> $${pkrToUsd(selectedUserData.balance || 0)}</p><p><strong>📅 Joined:</strong> ${selectedUserData.joinedDate || 'N/A'}</p><p><strong>🔗 Referred By:</strong> ${selectedUserData.referredBy || 'none'}</p>`;
         const toggleBtn = document.getElementById('toggleStatusBtn');
         if (selectedUserData.status === 'blocked') {
             toggleBtn.innerHTML = '<i class="fas fa-check-circle"></i> Unblock User';
@@ -925,32 +855,21 @@
             toggleBtn.innerHTML = '<i class="fas fa-ban"></i> Block User';
             toggleBtn.style.background = '#e74c3c';
         }
-        
         document.getElementById('balanceAmount').value = '';
         document.getElementById('userModal').style.display = 'flex';
     }
     
-    function closeUserModal() {
-        document.getElementById('userModal').style.display = 'none';
-        selectedUserId = null;
-        selectedUserData = null;
-    }
+    function closeUserModal() { document.getElementById('userModal').style.display = 'none'; selectedUserId = null; selectedUserData = null; }
     
     async function updateUserBalance() {
         const balanceType = document.getElementById('balanceType').value;
         const action = document.getElementById('actionType').value;
         const amountInUsd = parseFloat(document.getElementById('balanceAmount').value);
-        
-        if (isNaN(amountInUsd) || amountInUsd <= 0) {
-            showToast("Enter valid amount in USD");
-            return;
-        }
-        
+        if (isNaN(amountInUsd) || amountInUsd <= 0) { showToast("Enter valid amount in USD"); return; }
         const amountInPkr = usdToPkr(amountInUsd);
         const currentBalance = selectedUserData[balanceType] || 0;
         let newBalance = action === 'add' ? currentBalance + amountInPkr : currentBalance - amountInPkr;
         if (newBalance < 0) newBalance = 0;
-        
         await db.ref('users/' + selectedUserId).update({ [balanceType]: newBalance });
         showToast(`Balance updated! New ${balanceType === 'depositBalance' ? 'Deposit' : 'Profit'} Balance: $${pkrToUsd(newBalance)}`);
         closeUserModal();
@@ -986,296 +905,81 @@
         }
     }
     
-    // Deposits Management
+    // Deposits
     async function loadDeposits() {
         const depositsSnap = await db.ref('deposits').once('value');
         const deposits = depositsSnap.val() || {};
         const tbody = document.getElementById('depositsList');
         tbody.innerHTML = '';
-        
         for (const [did, d] of Object.entries(deposits)) {
-            const screenshotHtml = d.screenshot ? 
-                `<img src="${d.screenshot}" class="screenshot-img" onclick="window.open('${d.screenshot}')" style="cursor:pointer;">` : 
-                'No image';
-            tbody.innerHTML += `
-                <tr>
-                    <td>${d.username || 'N/A'}</td>
-                    <td>$${pkrToUsd(d.amount)}</td>
-                    <td>${d.tid || 'N/A'}</td>
-                    <td>${screenshotHtml}</td>
-                    <td>${d.date || 'N/A'}</td>
-                    <td><span class="${d.status === 'pending' ? 'status-pending' : 'status-approved'}">${d.status}</span></td>
-                    <td>
-                        ${d.status === 'pending' ? 
-                            `<button class="btn-approve" onclick="approveDeposit('${did}', ${d.amount}, '${d.uid}', '${d.referredBy || ''}')">Approve</button>
-                             <button class="btn-reject" onclick="rejectDeposit('${did}')">Reject</button>` : 
-                            'Processed'}
-                     </td>
-                </tr>
-            `;
+            const screenshotHtml = d.screenshot ? `<img src="${d.screenshot}" class="screenshot-img" onclick="window.open('${d.screenshot}')" style="cursor:pointer;">` : 'No image';
+            tbody.innerHTML += `<tr><td>${d.username || 'N/A'}</td><td>$${pkrToUsd(d.amount)}</td><td>${d.tid || 'N/A'}</td><td>${screenshotHtml}</td><td>${d.date || 'N/A'}</td><td><span class="${d.status === 'pending' ? 'status-pending' : 'status-approved'}">${d.status}</span></td><td>${d.status === 'pending' ? `<button class="btn-approve" onclick="approveDeposit('${did}', ${d.amount}, '${d.uid}', '${d.referredBy || ''}')">Approve</button><button class="btn-reject" onclick="rejectDeposit('${did}')">Reject</button>` : 'Processed'}</td></tr>`;
         }
-        if (tbody.innerHTML === '') {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No deposit requests found</td></tr>';
-        }
+        if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No deposit requests found</td></tr>';
     }
     
     async function approveDeposit(did, amountInPkr, uid, referredBy) {
         if (!confirm(`Approve deposit of $${pkrToUsd(amountInPkr)}?`)) return;
-        
         await db.ref('deposits/' + did).update({ status: 'approved' });
-        
         const userSnap = await db.ref('users/' + uid).once('value');
         const user = userSnap.val();
-        await db.ref('users/' + uid).update({
-            depositBalance: (user.depositBalance || 0) + amountInPkr,
-            hasDeposited: true
-        });
-        
-        // Add 5% commission to referrer
+        await db.ref('users/' + uid).update({ depositBalance: (user.depositBalance || 0) + amountInPkr, hasDeposited: true });
         if (referredBy && referredBy !== "none") {
             const refSnap = await db.ref('users/' + referredBy).once('value');
             const referrer = refSnap.val();
             if (referrer) {
                 const commissionInPkr = amountInPkr * 0.05;
-                await db.ref('users/' + referredBy).update({
-                    pendingCommission: (referrer.pendingCommission || 0) + commissionInPkr
-                });
-                await db.ref('commissionHistory').push({
-                    referrerUID: referredBy,
-                    fromUID: uid,
-                    fromUsername: user.username || 'User',
-                    amount: commissionInPkr,
-                    date: new Date().toLocaleString()
-                });
+                await db.ref('users/' + referredBy).update({ pendingCommission: (referrer.pendingCommission || 0) + commissionInPkr });
+                await db.ref('commissionHistory').push({ referrerUID: referredBy, fromUID: uid, fromUsername: user.username || 'User', amount: commissionInPkr, date: new Date().toLocaleString() });
             }
         }
-        
         loadDeposits();
         loadDashboard();
         showToast(`Deposit of $${pkrToUsd(amountInPkr)} approved!`);
     }
     
-    async function rejectDeposit(did) {
-        if (!confirm("Reject this deposit?")) return;
-        await db.ref('deposits/' + did).update({ status: 'rejected' });
-        loadDeposits();
-        showToast("Deposit rejected!");
-    }
+    async function rejectDeposit(did) { if (!confirm("Reject this deposit?")) return; await db.ref('deposits/' + did).update({ status: 'rejected' }); loadDeposits(); showToast("Deposit rejected!"); }
     
-    // Withdrawals Management
+    // Withdrawals
     async function loadWithdrawals() {
         const withdrawalsSnap = await db.ref('withdrawals').once('value');
         const withdrawals = withdrawalsSnap.val() || {};
         const tbody = document.getElementById('withdrawalsList');
         tbody.innerHTML = '';
-        
         for (const [wid, w] of Object.entries(withdrawals)) {
-            tbody.innerHTML += `
-                <tr>
-                    <td>${w.username || 'N/A'}</td>
-                    <td>$${pkrToUsd(w.amount)}</td>
-                    <td>${w.method || 'N/A'}</td>
-                    <td>${w.account || 'N/A'}<br><small>${w.title || ''}</small></td>
-                    <td>${w.date || 'N/A'}</td>
-                    <td><span class="${w.status === 'pending' ? 'status-pending' : 'status-approved'}">${w.status}</span></td>
-                    <td>
-                        ${w.status === 'pending' ? 
-                            `<button class="btn-approve" onclick="approveWithdraw('${wid}')">Approve</button>
-                             <button class="btn-reject" onclick="rejectWithdraw('${wid}', ${w.amount}, '${w.uid}')">Reject</button>` : 
-                            'Processed'}
-                     </td>
-                </tr>
-            `;
+            tbody.innerHTML += `<tr><td>${w.username || 'N/A'}</td><td>$${pkrToUsd(w.amount)}</td><td>${w.method || 'N/A'}</td><td>${w.account || 'N/A'}<br><small>${w.title || ''}</small></td><td>${w.date || 'N/A'}</td><td><span class="${w.status === 'pending' ? 'status-pending' : 'status-approved'}">${w.status}</span></td><td>${w.status === 'pending' ? `<button class="btn-approve" onclick="approveWithdraw('${wid}')">Approve</button><button class="btn-reject" onclick="rejectWithdraw('${wid}', ${w.amount}, '${w.uid}')">Reject</button>` : 'Processed'}</td></tr>`;
         }
-        if (tbody.innerHTML === '') {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No withdrawal requests found</td></tr>';
-        }
+        if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No withdrawal requests found</td></tr>';
     }
     
-    async function approveWithdraw(wid) {
-        if (!confirm("Approve this withdrawal?")) return;
-        await db.ref('withdrawals/' + wid).update({ status: 'approved' });
-        loadWithdrawals();
-        showToast("Withdrawal approved!");
-    }
+    async function approveWithdraw(wid) { if (!confirm("Approve this withdrawal?")) return; await db.ref('withdrawals/' + wid).update({ status: 'approved' }); loadWithdrawals(); showToast("Withdrawal approved!"); }
     
-    async function rejectWithdraw(wid, amountInPkr, uid) {
-        if (!confirm("Reject this withdrawal? Amount will be returned to user.")) return;
-        
-        await db.ref('withdrawals/' + wid).update({ status: 'rejected' });
-        
-        const userSnap = await db.ref('users/' + uid).once('value');
-        const user = userSnap.val();
-        await db.ref('users/' + uid).update({
-            balance: (user.balance || 0) + amountInPkr
-        });
-        
-        loadWithdrawals();
-        showToast(`Withdrawal of $${pkrToUsd(amountInPkr)} rejected! Amount returned.`);
-    }
+    async function rejectWithdraw(wid, amountInPkr, uid) { if (!confirm("Reject this withdrawal? Amount will be returned to user.")) return; await db.ref('withdrawals/' + wid).update({ status: 'rejected' }); const userSnap = await db.ref('users/' + uid).once('value'); const user = userSnap.val(); await db.ref('users/' + uid).update({ balance: (user.balance || 0) + amountInPkr }); loadWithdrawals(); showToast(`Withdrawal of $${pkrToUsd(amountInPkr)} rejected! Amount returned.`); }
     
-    // Plans Management
+    // Plans
     async function loadPlans() {
         const plansSnap = await db.ref('plans').once('value');
         const plans = plansSnap.val() || {};
         const tbody = document.getElementById('plansList');
         tbody.innerHTML = '';
-        
         for (const [pid, p] of Object.entries(plans)) {
-            const investmentInUsd = pkrToUsd(p.investment);
-            const profitInUsd = pkrToUsd(p.dailyProfit);
-            tbody.innerHTML += `
-                <tr>
-                    <td>${p.type || p.name || 'Plan'}</td>
-                    <td>$${investmentInUsd}</td>
-                    <td>$${profitInUsd}</td>
-                    <td>${p.days || 1} Days</td>
-                    <td>${p.videoLink ? 'Yes' : 'No'}</td>
-                    <td>
-                        <button class="btn-edit" onclick="editPlan('${pid}', '${p.type || p.name}', ${p.investment}, ${p.dailyProfit}, ${p.days || 1}, '${p.videoLink || ''}')">Edit</button>
-                        <button class="btn-delete" onclick="deletePlan('${pid}')">Delete</button>
-                     </td>
-                </tr>
-            `;
+            tbody.innerHTML += `<tr><td>${p.type || p.name || 'Plan'}</td><td>$${pkrToUsd(p.investment)}</td><td>$${pkrToUsd(p.dailyProfit)}</td><td>${p.days || 1} Days</td><td>${p.videoLink ? 'Yes' : 'No'}</td><td><button class="btn-edit" onclick="editPlan('${pid}', '${p.type || p.name}', ${p.investment}, ${p.dailyProfit}, ${p.days || 1}, '${p.videoLink || ''}')">Edit</button><button class="btn-delete" onclick="deletePlan('${pid}')">Delete</button></td></tr>`;
         }
-        if (tbody.innerHTML === '') {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No plans found</td></tr>';
-        }
+        if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No plans found</td></tr>';
     }
     
-    function openPlanModal() {
-        editingPlanId = null;
-        document.getElementById('planModalTitle').innerText = "Add New Plan";
-        document.getElementById('planName').value = '';
-        document.getElementById('planInvestment').value = '';
-        document.getElementById('planProfit').value = '';
-        document.getElementById('planDays').value = '';
-        document.getElementById('planVideo').value = '';
-        document.getElementById('planModal').style.display = 'flex';
-    }
-    
-    function closePlanModal() {
-        document.getElementById('planModal').style.display = 'none';
-    }
-    
-    function editPlan(pid, name, investmentInPkr, profitInPkr, days, video) {
-        editingPlanId = pid;
-        document.getElementById('planModalTitle').innerText = "Edit Plan";
-        document.getElementById('planName').value = name;
-        document.getElementById('planInvestment').value = pkrToUsd(investmentInPkr);
-        document.getElementById('planProfit').value = pkrToUsd(profitInPkr);
-        document.getElementById('planDays').value = days;
-        document.getElementById('planVideo').value = video;
-        document.getElementById('planModal').style.display = 'flex';
-    }
-    
-    async function savePlan() {
-        const name = document.getElementById('planName').value;
-        const investmentInUsd = parseFloat(document.getElementById('planInvestment').value);
-        const profitInUsd = parseFloat(document.getElementById('planProfit').value);
-        const days = parseInt(document.getElementById('planDays').value);
-        const video = document.getElementById('planVideo').value;
-        
-        if (!name || !investmentInUsd || !profitInUsd || !days) {
-            showToast("Fill all required fields");
-            return;
-        }
-        
-        const investmentInPkr = usdToPkr(investmentInUsd);
-        const profitInPkr = usdToPkr(profitInUsd);
-        
-        const planData = {
-            type: name,
-            investment: investmentInPkr,
-            dailyProfit: profitInPkr,
-            days: days,
-            videoLink: video || "no-link"
-        };
-        
-        if (editingPlanId) {
-            await db.ref('plans/' + editingPlanId).update(planData);
-            showToast("Plan updated!");
-        } else {
-            await db.ref('plans').push(planData);
-            showToast("Plan added!");
-        }
-        closePlanModal();
-        loadPlans();
-    }
-    
-    async function deletePlan(pid) {
-        if (!confirm("Delete this plan?")) return;
-        await db.ref('plans/' + pid).remove();
-        loadPlans();
-        showToast("Plan deleted!");
-    }
+    function openPlanModal() { editingPlanId = null; document.getElementById('planModalTitle').innerText = "Add New Plan"; document.getElementById('planName').value = ''; document.getElementById('planInvestment').value = ''; document.getElementById('planProfit').value = ''; document.getElementById('planDays').value = ''; document.getElementById('planVideo').value = ''; document.getElementById('planModal').style.display = 'flex'; }
+    function closePlanModal() { document.getElementById('planModal').style.display = 'none'; }
+    function editPlan(pid, name, investmentInPkr, profitInPkr, days, video) { editingPlanId = pid; document.getElementById('planModalTitle').innerText = "Edit Plan"; document.getElementById('planName').value = name; document.getElementById('planInvestment').value = pkrToUsd(investmentInPkr); document.getElementById('planProfit').value = pkrToUsd(profitInPkr); document.getElementById('planDays').value = days; document.getElementById('planVideo').value = video; document.getElementById('planModal').style.display = 'flex'; }
+    async function savePlan() { const name = document.getElementById('planName').value; const investmentInUsd = parseFloat(document.getElementById('planInvestment').value); const profitInUsd = parseFloat(document.getElementById('planProfit').value); const days = parseInt(document.getElementById('planDays').value); const video = document.getElementById('planVideo').value; if (!name || !investmentInUsd || !profitInUsd || !days) { showToast("Fill all required fields"); return; } const planData = { type: name, investment: usdToPkr(investmentInUsd), dailyProfit: usdToPkr(profitInUsd), days: days, videoLink: video || "no-link" }; if (editingPlanId) { await db.ref('plans/' + editingPlanId).update(planData); showToast("Plan updated!"); } else { await db.ref('plans').push(planData); showToast("Plan added!"); } closePlanModal(); loadPlans(); }
+    async function deletePlan(pid) { if (!confirm("Delete this plan?")) return; await db.ref('plans/' + pid).remove(); loadPlans(); showToast("Plan deleted!"); }
     
     // Notifications
-    async function sendNotification() {
-        const title = document.getElementById('notifTitle').value;
-        const message = document.getElementById('notifMessage').value;
-        
-        if (!title || !message) {
-            showToast("Enter title and message");
-            return;
-        }
-        
-        await db.ref('notifications').push({
-            title: title,
-            message: message,
-            date: new Date().toLocaleString(),
-            timestamp: Date.now()
-        });
-        
-        document.getElementById('notifTitle').value = '';
-        document.getElementById('notifMessage').value = '';
-        loadNotifications();
-        showToast("Notification sent to all users!");
-    }
+    async function sendNotification() { const title = document.getElementById('notifTitle').value; const message = document.getElementById('notifMessage').value; if (!title || !message) { showToast("Enter title and message"); return; } await db.ref('notifications').push({ title: title, message: message, date: new Date().toLocaleString(), timestamp: Date.now() }); document.getElementById('notifTitle').value = ''; document.getElementById('notifMessage').value = ''; loadNotifications(); showToast("Notification sent to all users!"); }
+    async function loadNotifications() { const notifSnap = await db.ref('notifications').once('value'); const notifications = notifSnap.val() || {}; const container = document.getElementById('notificationsList'); container.innerHTML = ''; const sorted = Object.entries(notifications).sort((a,b) => (b[1].timestamp || 0) - (a[1].timestamp || 0)); if (sorted.length === 0) { container.innerHTML = '<div style="text-align:center; padding:20px;">No notifications sent yet</div>'; return; } for (const [nid, notif] of sorted) { container.innerHTML += `<div style="background:#1a1f2e; border-radius:10px; padding:12px; margin-bottom:10px; border-left:3px solid #00a859;"><div style="font-weight:bold; color:#00a859;">${escapeHtml(notif.title)}</div><div style="font-size:12px; margin:5px 0;">${escapeHtml(notif.message)}</div><div style="font-size:10px; color:#8b92a8;">${notif.date}</div><button onclick="deleteNotification('${nid}')" style="margin-top:8px; background:#e74c3c; color:white; padding:4px 10px; font-size:11px;">Delete</button></div>`; } }
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+    async function deleteNotification(nid) { if (!confirm("Delete this notification?")) return; await db.ref('notifications/' + nid).remove(); loadNotifications(); showToast("Notification deleted!"); }
     
-    async function loadNotifications() {
-        const notifSnap = await db.ref('notifications').once('value');
-        const notifications = notifSnap.val() || {};
-        const container = document.getElementById('notificationsList');
-        container.innerHTML = '';
-        
-        const sorted = Object.entries(notifications).sort((a,b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
-        
-        if (sorted.length === 0) {
-            container.innerHTML = '<div style="text-align:center; padding:20px;">No notifications sent yet</div>';
-            return;
-        }
-        
-        for (const [nid, notif] of sorted) {
-            container.innerHTML += `
-                <div style="background:#1a1f2e; border-radius:10px; padding:12px; margin-bottom:10px; border-left:3px solid #00a859;">
-                    <div style="font-weight:bold; color:#00a859;">${escapeHtml(notif.title)}</div>
-                    <div style="font-size:12px; margin:5px 0;">${escapeHtml(notif.message)}</div>
-                    <div style="font-size:10px; color:#8b92a8;">${notif.date}</div>
-                    <button onclick="deleteNotification('${nid}')" style="margin-top:8px; background:#e74c3c; color:white; padding:4px 10px; font-size:11px;">Delete</button>
-                </div>
-            `;
-        }
-    }
-    
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-    
-    async function deleteNotification(nid) {
-        if (!confirm("Delete this notification?")) return;
-        await db.ref('notifications/' + nid).remove();
-        loadNotifications();
-        showToast("Notification deleted!");
-    }
-    
-    // Initialize
     checkAndShowAutoCreate();
 </script>
 </body>

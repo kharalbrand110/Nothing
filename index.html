@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HARRY LINE - Admin Panel</title>
+    <title>Admin Panel - HARRY LINE</title>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
@@ -24,70 +24,50 @@
             min-height: 100vh;
         }
 
-        /* Login Page */
+        /* Login */
         .login-container {
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #0a0c15 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, #0a0c15, #1a1a2e);
             padding: 20px;
         }
 
         .login-card {
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.05);
             padding: 40px;
             border-radius: 24px;
             width: 100%;
-            max-width: 420px;
-            border: 1px solid rgba(255,255,255,0.05);
+            max-width: 400px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .login-card h2 {
-            background: linear-gradient(135deg, #00d4ff, #00a859);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: #00a859;
             text-align: center;
             margin-bottom: 30px;
-            font-size: 28px;
         }
 
         .login-card input {
             width: 100%;
-            padding: 14px 16px;
+            padding: 14px;
             margin-bottom: 15px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 12px;
             color: white;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .login-card input:focus {
-            outline: none;
-            border-color: #00a859;
-            background: rgba(255,255,255,0.08);
         }
 
         .login-card button {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #00a859, #008040);
+            background: #00a859;
             border: none;
             border-radius: 12px;
             color: white;
-            font-size: 16px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .login-card button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0,168,89,0.3);
         }
 
         .error-msg {
@@ -101,84 +81,50 @@
             font-size: 13px;
         }
 
-        .auto-create-box {
-            background: rgba(46,204,113,0.1);
-            border: 1px solid #2ed573;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .auto-create-btn {
-            background: #2ed573;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
         /* Admin Panel */
         .admin-container {
             display: none;
-            min-height: 100vh;
         }
 
         /* Sidebar */
         .sidebar {
-            width: 280px;
-            background: linear-gradient(180deg, #0f1422, #0a0f1e);
-            border-right: 1px solid rgba(255,255,255,0.05);
+            width: 260px;
+            background: #0f1422;
             position: fixed;
             height: 100vh;
             overflow-y: auto;
+            border-right: 1px solid rgba(255,255,255,0.05);
         }
 
         .sidebar-header {
-            padding: 25px;
+            padding: 20px;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .sidebar-header h3 {
-            background: linear-gradient(135deg, #00d4ff, #00a859);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-size: 20px;
-        }
-
-        .sidebar-menu {
-            padding: 20px 0;
+            color: #00a859;
         }
 
         .menu-item {
-            padding: 15px 25px;
+            padding: 15px 20px;
             display: flex;
             align-items: center;
             gap: 12px;
             cursor: pointer;
-            transition: all 0.3s;
             color: #8b92a8;
-            border-left: 3px solid transparent;
+            transition: all 0.3s;
         }
 
         .menu-item:hover, .menu-item.active {
             background: rgba(0,168,89,0.1);
             color: #00a859;
-            border-left-color: #00a859;
-        }
-
-        .menu-item i {
-            width: 24px;
+            border-left: 3px solid #00a859;
         }
 
         /* Main Content */
         .main-content {
-            flex: 1;
-            margin-left: 280px;
+            margin-left: 260px;
             padding: 20px;
         }
 
@@ -209,7 +155,7 @@
         /* Stats Cards */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -218,7 +164,7 @@
             background: #0f1422;
             border-radius: 20px;
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
         }
 
         .stat-card h4 {
@@ -249,15 +195,15 @@
         .section h3 {
             color: #00a859;
             margin-bottom: 20px;
-            padding-bottom: 10px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
         }
 
         /* Search */
         .search-box {
-            margin-bottom: 20px;
             display: flex;
             gap: 10px;
+            margin-bottom: 20px;
         }
 
         .search-box input {
@@ -275,7 +221,6 @@
             border: none;
             border-radius: 10px;
             color: white;
-            font-weight: bold;
             cursor: pointer;
         }
 
@@ -298,49 +243,21 @@
             color: #00a859;
         }
 
-        /* Buttons */
         button {
             background: #00a859;
             border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
             color: white;
-            font-weight: bold;
             cursor: pointer;
             margin: 3px;
+            font-size: 12px;
         }
 
         .btn-approve { background: #2ed573; }
         .btn-reject { background: #e74c3c; }
         .btn-edit { background: #3498db; }
         .btn-delete { background: #e74c3c; }
-
-        .status-pending {
-            background: rgba(255,165,0,0.2);
-            color: #ffa500;
-            padding: 4px 8px;
-            border-radius: 5px;
-            font-size: 11px;
-            display: inline-block;
-        }
-
-        .status-approved {
-            background: rgba(46,213,115,0.2);
-            color: #2ed573;
-            padding: 4px 8px;
-            border-radius: 5px;
-            font-size: 11px;
-            display: inline-block;
-        }
-
-        .status-blocked {
-            background: rgba(231,76,60,0.2);
-            color: #e74c3c;
-            padding: 4px 8px;
-            border-radius: 5px;
-            font-size: 11px;
-            display: inline-block;
-        }
 
         /* Modal */
         .modal {
@@ -362,8 +279,6 @@
             border-radius: 20px;
             width: 90%;
             max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
         }
 
         .modal-content h3 {
@@ -384,45 +299,44 @@
         .modal-buttons {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
         }
 
         .modal-buttons button {
             flex: 1;
         }
 
-        .user-detail-box {
+        .user-detail {
             background: #1a1f2e;
-            border-radius: 10px;
             padding: 15px;
+            border-radius: 10px;
             margin-bottom: 20px;
         }
 
-        .user-detail-box p {
-            margin: 8px 0;
-            color: #cbd5e0;
+        .user-detail p {
+            margin: 5px 0;
             font-size: 13px;
         }
 
-        .user-detail-box strong {
-            color: #00a859;
-        }
-
-        .balance-control {
+        .balance-group {
             display: flex;
             gap: 10px;
             margin-bottom: 15px;
         }
 
-        .balance-control select, .balance-control input {
+        .balance-group select, .balance-group input {
             flex: 1;
             margin-bottom: 0;
         }
 
-        .screenshot-img {
-            max-width: 50px;
-            border-radius: 8px;
-            cursor: pointer;
+        .settings-group {
+            margin-bottom: 20px;
+        }
+
+        .settings-group label {
+            display: block;
+            color: #8b92a8;
+            font-size: 12px;
+            margin-bottom: 5px;
         }
 
         .toast {
@@ -434,7 +348,6 @@
             padding: 12px 24px;
             border-radius: 10px;
             z-index: 10001;
-            font-weight: bold;
             animation: fadeOut 3s ease forwards;
         }
 
@@ -446,45 +359,27 @@
 
         @media (max-width: 768px) {
             .sidebar {
-                width: 80px;
+                width: 70px;
             }
             .sidebar-header h3, .menu-item span {
                 display: none;
             }
-            .menu-item i {
-                font-size: 20px;
-            }
             .main-content {
-                margin-left: 80px;
-            }
-            th, td {
-                padding: 8px;
-                font-size: 11px;
-            }
-            button {
-                padding: 5px 10px;
-                font-size: 10px;
+                margin-left: 70px;
             }
         }
     </style>
 </head>
 <body>
 
-<!-- Login Page -->
+<!-- Login -->
 <div id="loginPage" class="login-container">
     <div class="login-card">
-        <h2><i class="fas fa-dollar-sign"></i> HARRY LINE ADMIN</h2>
-        <div id="autoCreateBox" class="auto-create-box" style="display:none;">
-            <p><i class="fas fa-info-circle"></i> No admin account found! Create one:</p>
-            <button class="auto-create-btn" onclick="autoCreateAdmin()"><i class="fas fa-user-plus"></i> Create Admin</button>
-        </div>
+        <h2><i class="fas fa-crown"></i> HARRY LINE ADMIN</h2>
         <input type="email" id="adminEmail" placeholder="Admin Email" value="admin@harryline.com">
         <input type="password" id="adminPassword" placeholder="Password" value="Admin@123">
-        <button onclick="adminLogin()"><i class="fas fa-sign-in-alt"></i> LOGIN</button>
+        <button onclick="adminLogin()">LOGIN</button>
         <div id="loginError" class="error-msg"></div>
-        <div style="text-align:center; margin-top:20px; font-size:11px; color:#8b92a8;">
-            Default: admin@harryline.com / Admin@123
-        </div>
     </div>
 </div>
 
@@ -492,34 +387,35 @@
 <div id="adminPanel" class="admin-container">
     <div class="sidebar">
         <div class="sidebar-header">
-            <h3><i class="fas fa-dollar-sign"></i> HARRY LINE</h3>
+            <h3><i class="fas fa-crown"></i> HARRY LINE</h3>
         </div>
-        <div class="sidebar-menu">
-            <div class="menu-item active" onclick="showSection('dashboard')">
-                <i class="fas fa-chart-line"></i><span> Dashboard</span>
-            </div>
-            <div class="menu-item" onclick="showSection('users')">
-                <i class="fas fa-users"></i><span> User Management</span>
-            </div>
-            <div class="menu-item" onclick="showSection('deposits')">
-                <i class="fas fa-arrow-down"></i><span> Deposit Requests</span>
-            </div>
-            <div class="menu-item" onclick="showSection('withdrawals')">
-                <i class="fas fa-arrow-up"></i><span> Withdrawal Requests</span>
-            </div>
-            <div class="menu-item" onclick="showSection('plans')">
-                <i class="fas fa-box"></i><span> Investment Plans</span>
-            </div>
-            <div class="menu-item" onclick="showSection('notifications')">
-                <i class="fas fa-bell"></i><span> Notifications</span>
-            </div>
+        <div class="menu-item active" onclick="showSection('dashboard')">
+            <i class="fas fa-chart-line"></i><span> Dashboard</span>
+        </div>
+        <div class="menu-item" onclick="showSection('users')">
+            <i class="fas fa-users"></i><span> Users</span>
+        </div>
+        <div class="menu-item" onclick="showSection('deposits')">
+            <i class="fas fa-arrow-down"></i><span> Deposits</span>
+        </div>
+        <div class="menu-item" onclick="showSection('withdrawals')">
+            <i class="fas fa-arrow-up"></i><span> Withdrawals</span>
+        </div>
+        <div class="menu-item" onclick="showSection('plans')">
+            <i class="fas fa-box"></i><span> Plans</span>
+        </div>
+        <div class="menu-item" onclick="showSection('settings')">
+            <i class="fas fa-cog"></i><span> Settings</span>
+        </div>
+        <div class="menu-item" onclick="showSection('notifications')">
+            <i class="fas fa-bell"></i><span> Notifications</span>
         </div>
     </div>
 
     <div class="main-content">
         <div class="top-bar">
             <h2 id="sectionTitle">Dashboard</h2>
-            <button class="logout-btn" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            <button class="logout-btn" onclick="adminLogout()">Logout</button>
         </div>
 
         <!-- Dashboard -->
@@ -528,21 +424,21 @@
                 <div class="stat-card"><h4>Total Users</h4><div class="value" id="totalUsers">0</div></div>
                 <div class="stat-card"><h4>Pending Deposits</h4><div class="value" id="pendingDeposits">0</div></div>
                 <div class="stat-card"><h4>Pending Withdrawals</h4><div class="value" id="pendingWithdrawals">0</div></div>
-                <div class="stat-card"><h4>Total Deposit Balance</h4><div class="value" id="totalDepositBal">$0</div></div>
-                <div class="stat-card"><h4>Total Profit Balance</h4><div class="value" id="totalProfitBal">$0</div></div>
+                <div class="stat-card"><h4>Total Deposit Bal</h4><div class="value" id="totalDepositBal">$0</div></div>
+                <div class="stat-card"><h4>Total Profit Bal</h4><div class="value" id="totalProfitBal">$0</div></div>
             </div>
         </div>
 
-        <!-- Users Management -->
+        <!-- Users -->
         <div id="usersSection" class="section">
             <div class="search-box">
                 <input type="text" id="searchUser" placeholder="Search by name, email or phone...">
-                <button onclick="searchUsers()"><i class="fas fa-search"></i> Search</button>
-                <button onclick="loadUsers()"><i class="fas fa-sync"></i> Refresh</button>
+                <button onclick="searchUsers()">Search</button>
+                <button onclick="loadUsers()">Refresh</button>
             </div>
             <div style="overflow-x: auto;">
                 <table>
-                    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Deposit Bal</th><th>Profit Bal</th><th>Status</th><th>Actions</th></tr></thead>
+                    <thead><tr><th>Name</th><th>Email</th><th>Deposit</th><th>Profit</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody id="usersList"></tbody>
                 </table>
             </div>
@@ -552,7 +448,7 @@
         <div id="depositsSection" class="section">
             <div style="overflow-x: auto;">
                 <table>
-                    <thead><tr><th>User</th><th>Amount</th><th>Binance Txn ID</th><th>Screenshot</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+                    <thead><tr><th>User</th><th>Amount</th><th>Txn ID</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody id="depositsList"></tbody>
                 </table>
             </div>
@@ -570,26 +466,56 @@
 
         <!-- Plans -->
         <div id="plansSection" class="section">
-            <button onclick="openPlanModal()" style="margin-bottom:20px;"><i class="fas fa-plus"></i> Add New Plan</button>
+            <button onclick="openPlanModal()" style="margin-bottom:20px;"><i class="fas fa-plus"></i> Add Plan</button>
             <div style="overflow-x: auto;">
                 <table>
-                    <thead><tr><th>Name</th><th>Investment ($)</th><th>Daily Profit ($)</th><th>Duration</th><th>Video Link</th><th>Actions</th></tr></thead>
+                    <thead><tr><th>Name</th><th>Investment</th><th>Daily Profit</th><th>Days</th><th>Actions</th></tr></thead>
                     <tbody id="plansList"></tbody>
                 </table>
             </div>
         </div>
 
+        <!-- Settings -->
+        <div id="settingsSection" class="section">
+            <div class="settings-group">
+                <label>Website Name</label>
+                <input type="text" id="siteName" placeholder="Website Name">
+            </div>
+            <div class="settings-group">
+                <label>QR Code Image URL</label>
+                <input type="text" id="qrUrl" placeholder="QR Code URL">
+                <div style="margin-top:10px;"><img id="qrPreview" src="" style="width:100px; border-radius:10px;"></div>
+            </div>
+            <div class="settings-group">
+                <label>Binance ID</label>
+                <input type="text" id="binanceId" placeholder="Binance ID">
+            </div>
+            <div class="settings-group">
+                <label>Minimum Withdrawal ($)</label>
+                <input type="number" id="minWithdraw" placeholder="Min Withdrawal">
+            </div>
+            <div class="settings-group">
+                <label>Referral Commission (%)</label>
+                <input type="number" id="commission" placeholder="Commission %" step="0.5">
+            </div>
+            <div class="settings-group">
+                <label>WhatsApp Support Link</label>
+                <input type="text" id="whatsappLink" placeholder="WhatsApp Link">
+            </div>
+            <button onclick="saveSettings()" style="width:100%;">Save All Settings</button>
+        </div>
+
         <!-- Notifications -->
         <div id="notificationsSection" class="section">
-            <div style="background:#1a1f2e; border-radius:15px; padding:20px; margin-bottom:20px;">
-                <h3 style="color:#00a859; margin-bottom:15px;">Send Notification</h3>
-                <input type="text" id="notifTitle" placeholder="Notification Title" style="width:100%; padding:12px; margin-bottom:15px; background:#0f1422; border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:white;">
-                <textarea id="notifMessage" placeholder="Notification Message" rows="3" style="width:100%; padding:12px; margin-bottom:15px; background:#0f1422; border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:white;"></textarea>
+            <div style="background:#1a1f2e; padding:20px; border-radius:15px; margin-bottom:20px;">
+                <h3 style="margin-bottom:15px;">Send Notification</h3>
+                <input type="text" id="notifTitle" placeholder="Title" style="width:100%; padding:12px; margin-bottom:15px; background:#0f1422; border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:white;">
+                <textarea id="notifMessage" placeholder="Message" rows="3" style="width:100%; padding:12px; margin-bottom:15px; background:#0f1422; border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:white;"></textarea>
                 <button onclick="sendNotification()" style="width:100%;">Send to All Users</button>
             </div>
-            <div style="background:#1a1f2e; border-radius:15px; padding:20px;">
-                <h3 style="color:#00a859; margin-bottom:15px;">Sent Notifications</h3>
-                <div id="notificationsList" style="max-height:400px; overflow-y:auto;"></div>
+            <div style="background:#1a1f2e; padding:20px; border-radius:15px;">
+                <h3 style="margin-bottom:15px;">Sent Notifications</h3>
+                <div id="notificationsList"></div>
             </div>
         </div>
     </div>
@@ -599,9 +525,9 @@
 <div id="userModal" class="modal">
     <div class="modal-content">
         <h3 id="userModalTitle">Manage User</h3>
-        <div id="userDetails" class="user-detail-box"></div>
-        <h4 style="color:#00a859; margin-bottom:10px;">Update Balance ($)</h4>
-        <div class="balance-control">
+        <div id="userDetails" class="user-detail"></div>
+        <h4>Update Balance ($)</h4>
+        <div class="balance-group">
             <select id="balanceType">
                 <option value="depositBalance">Deposit Balance</option>
                 <option value="balance">Profit Balance</option>
@@ -610,16 +536,12 @@
                 <option value="add">Add (+)</option>
                 <option value="remove">Remove (-)</option>
             </select>
-            <input type="number" id="balanceAmount" placeholder="Amount in $" step="0.01">
+            <input type="number" id="balanceAmount" placeholder="Amount">
         </div>
-        <button onclick="updateUserBalance()" style="width:100%; background:#3498db;">Update Balance</button>
-        <h4 style="color:#00a859; margin:15px 0 10px 0;">User Actions</h4>
+        <button onclick="updateBalance()" style="width:100%; margin-bottom:15px; background:#3498db;">Update Balance</button>
         <div class="modal-buttons">
-            <button id="toggleStatusBtn" onclick="toggleUserStatus()">Block User</button>
-            <button onclick="resetUserPassword()" style="background:#f39c12;">Reset Password</button>
-            <button onclick="deleteUser()" style="background:#e74c3c;">Delete User</button>
-        </div>
-        <div class="modal-buttons" style="margin-top:10px;">
+            <button id="toggleStatusBtn" onclick="toggleUserStatus()">Block</button>
+            <button onclick="deleteUser()" style="background:#e74c3c;">Delete</button>
             <button onclick="closeUserModal()" style="background:#555;">Close</button>
         </div>
     </div>
@@ -628,12 +550,12 @@
 <!-- Plan Modal -->
 <div id="planModal" class="modal">
     <div class="modal-content">
-        <h3 id="planModalTitle">Add New Plan</h3>
+        <h3 id="planModalTitle">Add Plan</h3>
         <input type="text" id="planName" placeholder="Plan Name">
-        <input type="number" id="planInvestment" placeholder="Investment Amount ($)" step="0.01">
+        <input type="number" id="planInvestment" placeholder="Investment ($)" step="0.01">
         <input type="number" id="planProfit" placeholder="Daily Profit ($)" step="0.01">
         <input type="number" id="planDays" placeholder="Duration (Days)">
-        <input type="text" id="planVideo" placeholder="Video/Ad Link">
+        <input type="text" id="planVideo" placeholder="Video Link (optional)">
         <div class="modal-buttons">
             <button onclick="savePlan()">Save</button>
             <button onclick="closePlanModal()" style="background:#e74c3c;">Cancel</button>
@@ -642,7 +564,7 @@
 </div>
 
 <script>
-    // 🔥 NEW FIREBASE CONFIG 🔥
+    // Firebase Config
     const firebaseConfig = {
         apiKey: "AIzaSyDzXUUnmQ4rEirDFFI_Xq-zkca29O5kxOg",
         authDomain: "admin-55316.firebaseapp.com",
@@ -650,92 +572,39 @@
         projectId: "admin-55316",
         storageBucket: "admin-55316.firebasestorage.app",
         messagingSenderId: "469097239359",
-        appId: "1:469097239359:web:938445bf183d4e4b30b98a",
-        measurementId: "G-VGCJ4BE7HE"
+        appId: "1:469097239359:web:938445bf183d4e4b30b98a"
     };
     
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     
     const auth = firebase.auth();
     const db = firebase.database();
     
     let currentAdmin = null;
-    let editingPlanId = null;
     let selectedUserId = null;
     let selectedUserData = null;
+    let editingPlanId = null;
     
     const USD_TO_PKR = 280;
     
-    function pkrToUsd(amount) { return (amount / USD_TO_PKR).toFixed(2); }
-    function usdToPkr(amount) { return amount * USD_TO_PKR; }
+    function pkrToUsd(amt) { return (amt / USD_TO_PKR).toFixed(2); }
+    function usdToPkr(amt) { return amt * USD_TO_PKR; }
     
     function showToast(msg) {
         const toast = document.createElement('div');
         toast.className = 'toast';
-        toast.innerHTML = '<i class="fas fa-check-circle"></i> ' + msg;
+        toast.innerHTML = msg;
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 3000);
     }
     
-    function showMessage(msg, type) {
-        const msgDiv = document.getElementById('loginError');
-        msgDiv.innerHTML = msg;
-        msgDiv.className = 'error-msg';
-        msgDiv.style.display = 'block';
-        setTimeout(() => msgDiv.style.display = 'none', 4000);
-    }
-    
-    // Auto Create Admin
-    async function autoCreateAdmin() {
-        const email = "admin@harryline.com";
-        const password = "Admin@123";
-        showMessage("Creating admin account...", "info");
-        try {
-            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-            await db.ref('admins/' + userCredential.user.uid).set({
-                email: email,
-                role: 'super_admin',
-                createdAt: new Date().toLocaleString()
-            });
-            showMessage("✅ Admin created! Now click LOGIN.", "success");
-            document.getElementById('autoCreateBox').style.display = 'none';
-        } catch (err) {
-            if (err.code === 'auth/email-already-in-use') {
-                showMessage("⚠️ Admin already exists! Just click LOGIN.", "info");
-                document.getElementById('autoCreateBox').style.display = 'none';
-            } else if (err.code === 'auth/operation-not-allowed') {
-                showMessage("❌ Enable Email/Password in Firebase Console!", "error");
-            } else {
-                showMessage("❌ Error: " + err.message, "error");
-            }
-        }
-    }
-    
-    async function checkAndShowAutoCreate() {
-        try {
-            const adminsSnap = await db.ref('admins').once('value');
-            if (!adminsSnap.exists()) {
-                document.getElementById('autoCreateBox').style.display = 'block';
-            } else {
-                document.getElementById('autoCreateBox').style.display = 'none';
-            }
-        } catch (err) { console.log("Check error:", err); }
-    }
-    
-    // Admin Login
     async function adminLogin() {
         const email = document.getElementById('adminEmail').value;
         const password = document.getElementById('adminPassword').value;
-        if (!email || !password) { showMessage("Enter email and password", "error"); return; }
+        if(!email || !password) { showToast("Enter email and password"); return; }
         try {
-            const userCredential = await auth.signInWithEmailAndPassword(email, password);
-            currentAdmin = userCredential.user;
-            const adminCheck = await db.ref('admins/' + currentAdmin.uid).once('value');
-            if (!adminCheck.exists()) {
-                await db.ref('admins/' + currentAdmin.uid).set({ email: email, role: 'admin', createdAt: new Date().toLocaleString() });
-            }
+            const user = await auth.signInWithEmailAndPassword(email, password);
+            currentAdmin = user.user;
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('adminPanel').style.display = 'block';
             loadDashboard();
@@ -743,26 +612,16 @@
             loadDeposits();
             loadWithdrawals();
             loadPlans();
+            loadSettings();
             loadNotifications();
             showToast("Welcome Admin!");
-        } catch (err) {
-            if (err.code === 'auth/user-not-found') {
-                showMessage("Admin not found! Click 'Create Admin' button.", "error");
-                checkAndShowAutoCreate();
-            } else if (err.code === 'auth/wrong-password') {
-                showMessage("Wrong password! Use: Admin@123", "error");
-            } else {
-                showMessage("Login Failed: " + err.message, "error");
-            }
-        }
+        } catch(err) { showToast("Login failed: " + err.message); }
     }
     
     function adminLogout() {
         auth.signOut();
-        currentAdmin = null;
         document.getElementById('loginPage').style.display = 'flex';
         document.getElementById('adminPanel').style.display = 'none';
-        checkAndShowAutoCreate();
     }
     
     function showSection(section) {
@@ -771,107 +630,109 @@
         document.getElementById(section + 'Section').classList.add('active');
         event.target.closest('.menu-item').classList.add('active');
         let title = section.charAt(0).toUpperCase() + section.slice(1);
-        if (section === 'users') title = 'User Management';
-        if (section === 'deposits') title = 'Deposit Requests';
-        if (section === 'withdrawals') title = 'Withdrawal Requests';
-        if (section === 'plans') title = 'Investment Plans';
+        if(section === 'users') title = 'User Management';
         document.getElementById('sectionTitle').innerText = title;
-        if (section === 'dashboard') loadDashboard();
-        if (section === 'users') loadUsers();
-        if (section === 'deposits') loadDeposits();
-        if (section === 'withdrawals') loadWithdrawals();
-        if (section === 'plans') loadPlans();
-        if (section === 'notifications') loadNotifications();
+        if(section === 'dashboard') loadDashboard();
+        if(section === 'users') loadUsers();
+        if(section === 'deposits') loadDeposits();
+        if(section === 'withdrawals') loadWithdrawals();
+        if(section === 'plans') loadPlans();
+        if(section === 'settings') loadSettings();
+        if(section === 'notifications') loadNotifications();
     }
     
-    // Dashboard
     async function loadDashboard() {
-        const usersSnap = await db.ref('users').once('value');
-        const users = usersSnap.val() || {};
+        const users = (await db.ref('users').once('value')).val() || {};
         document.getElementById('totalUsers').innerText = Object.keys(users).length;
-        let totalDepositBal = 0, totalProfitBal = 0;
+        let totalDeposit = 0, totalProfit = 0;
         Object.values(users).forEach(u => {
-            totalDepositBal += (u.depositBalance || 0);
-            totalProfitBal += (u.balance || 0);
+            totalDeposit += (u.depositBalance || 0);
+            totalProfit += (u.balance || 0);
         });
-        document.getElementById('totalDepositBal').innerText = `$${pkrToUsd(totalDepositBal)}`;
-        document.getElementById('totalProfitBal').innerText = `$${pkrToUsd(totalProfitBal)}`;
-        const depositsSnap = await db.ref('deposits').once('value');
-        const deposits = depositsSnap.val() || {};
+        document.getElementById('totalDepositBal').innerText = `$${pkrToUsd(totalDeposit)}`;
+        document.getElementById('totalProfitBal').innerText = `$${pkrToUsd(totalProfit)}`;
+        const deposits = (await db.ref('deposits').once('value')).val() || {};
         let pendingDeposits = 0;
-        Object.values(deposits).forEach(d => { if (d.status === 'pending') pendingDeposits++; });
+        Object.values(deposits).forEach(d => { if(d.status === 'pending') pendingDeposits++; });
         document.getElementById('pendingDeposits').innerText = pendingDeposits;
-        const withdrawalsSnap = await db.ref('withdrawals').once('value');
-        const withdrawals = withdrawalsSnap.val() || {};
+        const withdrawals = (await db.ref('withdrawals').once('value')).val() || {};
         let pendingWithdrawals = 0;
-        Object.values(withdrawals).forEach(w => { if (w.status === 'pending') pendingWithdrawals++; });
+        Object.values(withdrawals).forEach(w => { if(w.status === 'pending') pendingWithdrawals++; });
         document.getElementById('pendingWithdrawals').innerText = pendingWithdrawals;
     }
     
-    // Users Management
     async function loadUsers() {
-        const usersSnap = await db.ref('users').once('value');
-        const users = usersSnap.val() || {};
+        const users = (await db.ref('users').once('value')).val() || {};
         const tbody = document.getElementById('usersList');
         tbody.innerHTML = '';
-        for (const [uid, u] of Object.entries(users)) {
-            if (uid === currentAdmin?.uid) continue;
-            const statusClass = u.status === 'blocked' ? 'status-blocked' : 'status-approved';
-            const statusText = u.status === 'blocked' ? 'Blocked' : 'Active';
-            tbody.innerHTML += `<tr><td>${u.username || 'N/A'}</td><td>${u.email || 'N/A'}</td><td>${u.phone || 'N/A'}</td><td>$${pkrToUsd(u.depositBalance || 0)}</td><td>$${pkrToUsd(u.balance || 0)}</td><td><span class="${statusClass}">${statusText}</span></td><td><button class="btn-edit" onclick="openUserModal('${uid}')">Manage</button></td></tr>`;
+        for(const [uid, u] of Object.entries(users)) {
+            if(uid === currentAdmin?.uid) continue;
+            tbody.innerHTML += `
+                <tr>
+                    <td>${u.username || 'N/A'}</td>
+                    <td>${u.email || 'N/A'}</td>
+                    <td>$${pkrToUsd(u.depositBalance || 0)}</td>
+                    <td>$${pkrToUsd(u.balance || 0)}</td>
+                    <td><span style="background:${u.status === 'blocked' ? '#e74c3c' : '#2ed573'}20; color:${u.status === 'blocked' ? '#e74c3c' : '#2ed573'}; padding:4px 8px; border-radius:5px;">${u.status || 'active'}</span></td>
+                    <td><button class="btn-edit" onclick="openUserModal('${uid}')">Manage</button></td>
+                </tr>
+            `;
         }
-        if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No users found</td></tr>';
+        if(tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No users</td></tr>';
     }
     
     function searchUsers() {
-        const searchTerm = document.getElementById('searchUser').value.toLowerCase();
+        const term = document.getElementById('searchUser').value.toLowerCase();
         db.ref('users').once('value', snap => {
             const users = snap.val() || {};
             const tbody = document.getElementById('usersList');
             tbody.innerHTML = '';
-            for (const [uid, u] of Object.entries(users)) {
-                if (uid === currentAdmin?.uid) continue;
-                if (u.username?.toLowerCase().includes(searchTerm) || u.email?.toLowerCase().includes(searchTerm) || u.phone?.includes(searchTerm)) {
-                    const statusClass = u.status === 'blocked' ? 'status-blocked' : 'status-approved';
-                    const statusText = u.status === 'blocked' ? 'Blocked' : 'Active';
-                    tbody.innerHTML += `<tr><td>${u.username || 'N/A'}</td><td>${u.email || 'N/A'}</td><td>${u.phone || 'N/A'}</td><td>$${pkrToUsd(u.depositBalance || 0)}</td><td>$${pkrToUsd(u.balance || 0)}</td><td><span class="${statusClass}">${statusText}</span></td><td><button class="btn-edit" onclick="openUserModal('${uid}')">Manage</button></td></tr>`;
+            for(const [uid, u] of Object.entries(users)) {
+                if(uid === currentAdmin?.uid) continue;
+                if(u.username?.toLowerCase().includes(term) || u.email?.toLowerCase().includes(term) || u.phone?.includes(term)) {
+                    tbody.innerHTML += `<tr><td>${u.username || 'N/A'}</td><td>${u.email || 'N/A'}</td><td>$${pkrToUsd(u.depositBalance || 0)}</td><td>$${pkrToUsd(u.balance || 0)}</td><td><span style="background:${u.status === 'blocked' ? '#e74c3c' : '#2ed573'}20; color:${u.status === 'blocked' ? '#e74c3c' : '#2ed573'}; padding:4px 8px; border-radius:5px;">${u.status || 'active'}</span></td><td><button class="btn-edit" onclick="openUserModal('${uid}')">Manage</button></td></tr>`;
                 }
             }
-            if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No users found</td></tr>';
+            if(tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No users found</td></tr>';
         });
     }
     
     async function openUserModal(uid) {
         selectedUserId = uid;
-        const userSnap = await db.ref('users/' + uid).once('value');
-        selectedUserData = userSnap.val();
-        document.getElementById('userModalTitle').innerHTML = `<i class="fas fa-user"></i> Manage: ${selectedUserData.username || 'User'}`;
-        document.getElementById('userDetails').innerHTML = `<p><strong>📧 Email:</strong> ${selectedUserData.email || 'N/A'}</p><p><strong>📱 Phone:</strong> ${selectedUserData.phone || 'N/A'}</p><p><strong>💰 Deposit Balance:</strong> $${pkrToUsd(selectedUserData.depositBalance || 0)}</p><p><strong>💵 Profit Balance:</strong> $${pkrToUsd(selectedUserData.balance || 0)}</p><p><strong>📅 Joined:</strong> ${selectedUserData.joinedDate || 'N/A'}</p><p><strong>🔗 Referred By:</strong> ${selectedUserData.referredBy || 'none'}</p>`;
+        const user = (await db.ref('users/' + uid).once('value')).val();
+        selectedUserData = user;
+        document.getElementById('userModalTitle').innerHTML = `<i class="fas fa-user"></i> Manage: ${user.username}`;
+        document.getElementById('userDetails').innerHTML = `
+            <p><strong>Email:</strong> ${user.email}</p>
+            <p><strong>Phone:</strong> ${user.phone || 'N/A'}</p>
+            <p><strong>Deposit Balance:</strong> $${pkrToUsd(user.depositBalance || 0)}</p>
+            <p><strong>Profit Balance:</strong> $${pkrToUsd(user.balance || 0)}</p>
+            <p><strong>Joined:</strong> ${user.joinedDate || 'N/A'}</p>
+        `;
         const toggleBtn = document.getElementById('toggleStatusBtn');
-        if (selectedUserData.status === 'blocked') {
-            toggleBtn.innerHTML = '<i class="fas fa-check-circle"></i> Unblock User';
+        if(user.status === 'blocked') {
+            toggleBtn.innerHTML = 'Unblock';
             toggleBtn.style.background = '#2ed573';
         } else {
-            toggleBtn.innerHTML = '<i class="fas fa-ban"></i> Block User';
+            toggleBtn.innerHTML = 'Block';
             toggleBtn.style.background = '#e74c3c';
         }
-        document.getElementById('balanceAmount').value = '';
         document.getElementById('userModal').style.display = 'flex';
     }
     
-    function closeUserModal() { document.getElementById('userModal').style.display = 'none'; selectedUserId = null; selectedUserData = null; }
+    function closeUserModal() { document.getElementById('userModal').style.display = 'none'; selectedUserId = null; }
     
-    async function updateUserBalance() {
-        const balanceType = document.getElementById('balanceType').value;
+    async function updateBalance() {
+        const type = document.getElementById('balanceType').value;
         const action = document.getElementById('actionType').value;
-        const amountInUsd = parseFloat(document.getElementById('balanceAmount').value);
-        if (isNaN(amountInUsd) || amountInUsd <= 0) { showToast("Enter valid amount in USD"); return; }
-        const amountInPkr = usdToPkr(amountInUsd);
-        const currentBalance = selectedUserData[balanceType] || 0;
-        let newBalance = action === 'add' ? currentBalance + amountInPkr : currentBalance - amountInPkr;
-        if (newBalance < 0) newBalance = 0;
-        await db.ref('users/' + selectedUserId).update({ [balanceType]: newBalance });
-        showToast(`Balance updated! New ${balanceType === 'depositBalance' ? 'Deposit' : 'Profit'} Balance: $${pkrToUsd(newBalance)}`);
+        const amountUsd = parseFloat(document.getElementById('balanceAmount').value);
+        if(isNaN(amountUsd) || amountUsd <= 0) { showToast("Enter valid amount"); return; }
+        const amountPkr = usdToPkr(amountUsd);
+        const current = selectedUserData[type] || 0;
+        let newBalance = action === 'add' ? current + amountPkr : current - amountPkr;
+        if(newBalance < 0) newBalance = 0;
+        await db.ref('users/' + selectedUserId).update({ [type]: newBalance });
+        showToast(`Balance updated! New: $${pkrToUsd(newBalance)}`);
         closeUserModal();
         loadUsers();
         loadDashboard();
@@ -885,18 +746,8 @@
         loadUsers();
     }
     
-    async function resetUserPassword() {
-        if (!selectedUserData.email) { showToast("No email found for this user"); return; }
-        if (confirm(`Send password reset email to ${selectedUserData.email}?`)) {
-            try {
-                await auth.sendPasswordResetEmail(selectedUserData.email);
-                showToast(`Password reset email sent to ${selectedUserData.email}`);
-            } catch (err) { showToast("Error: " + err.message); }
-        }
-    }
-    
     async function deleteUser() {
-        if (confirm(`⚠️ Delete "${selectedUserData.username}" permanently? This cannot be undone!`)) {
+        if(confirm(`Delete ${selectedUserData.username} permanently?`)) {
             await db.ref('users/' + selectedUserId).remove();
             showToast("User deleted!");
             closeUserModal();
@@ -905,82 +756,143 @@
         }
     }
     
-    // Deposits
     async function loadDeposits() {
-        const depositsSnap = await db.ref('deposits').once('value');
-        const deposits = depositsSnap.val() || {};
+        const deposits = (await db.ref('deposits').once('value')).val() || {};
         const tbody = document.getElementById('depositsList');
         tbody.innerHTML = '';
-        for (const [did, d] of Object.entries(deposits)) {
-            const screenshotHtml = d.screenshot ? `<img src="${d.screenshot}" class="screenshot-img" onclick="window.open('${d.screenshot}')" style="cursor:pointer;">` : 'No image';
-            tbody.innerHTML += `<tr><td>${d.username || 'N/A'}</td><td>$${pkrToUsd(d.amount)}</td><td>${d.tid || 'N/A'}</td><td>${screenshotHtml}</td><td>${d.date || 'N/A'}</td><td><span class="${d.status === 'pending' ? 'status-pending' : 'status-approved'}">${d.status}</span></td><td>${d.status === 'pending' ? `<button class="btn-approve" onclick="approveDeposit('${did}', ${d.amount}, '${d.uid}', '${d.referredBy || ''}')">Approve</button><button class="btn-reject" onclick="rejectDeposit('${did}')">Reject</button>` : 'Processed'}</td></tr>`;
+        for(const [did, d] of Object.entries(deposits)) {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${d.username || 'N/A'}</td>
+                    <td>$${pkrToUsd(d.amount)}</td>
+                    <td>${d.tid || 'N/A'}</td>
+                    <td>${d.date || 'N/A'}</td>
+                    <td><span style="background:${d.status === 'pending' ? '#ffa50020' : '#2ed57320'}; color:${d.status === 'pending' ? '#ffa500' : '#2ed573'}; padding:4px 8px; border-radius:5px;">${d.status}</span></td>
+                    <td>${d.status === 'pending' ? `<button class="btn-approve" onclick="approveDeposit('${did}', ${d.amount}, '${d.uid}', '${d.referredBy || ''}')">Approve</button><button class="btn-reject" onclick="rejectDeposit('${did}')">Reject</button>` : 'Done'}</td>
+                </tr>
+            `;
         }
-        if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No deposit requests found</td></tr>';
+        if(tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No deposits</td></tr>';
     }
     
-    async function approveDeposit(did, amountInPkr, uid, referredBy) {
-        if (!confirm(`Approve deposit of $${pkrToUsd(amountInPkr)}?`)) return;
+    async function approveDeposit(did, amountPkr, uid, referredBy) {
+        if(!confirm(`Approve deposit of $${pkrToUsd(amountPkr)}?`)) return;
         await db.ref('deposits/' + did).update({ status: 'approved' });
-        const userSnap = await db.ref('users/' + uid).once('value');
-        const user = userSnap.val();
-        await db.ref('users/' + uid).update({ depositBalance: (user.depositBalance || 0) + amountInPkr, hasDeposited: true });
-        if (referredBy && referredBy !== "none") {
-            const refSnap = await db.ref('users/' + referredBy).once('value');
-            const referrer = refSnap.val();
-            if (referrer) {
-                const commissionInPkr = amountInPkr * 0.05;
-                await db.ref('users/' + referredBy).update({ pendingCommission: (referrer.pendingCommission || 0) + commissionInPkr });
-                await db.ref('commissionHistory').push({ referrerUID: referredBy, fromUID: uid, fromUsername: user.username || 'User', amount: commissionInPkr, date: new Date().toLocaleString() });
+        const user = (await db.ref('users/' + uid).once('value')).val();
+        await db.ref('users/' + uid).update({ depositBalance: (user.depositBalance || 0) + amountPkr, hasDeposited: true });
+        if(referredBy && referredBy !== "none") {
+            const referrer = (await db.ref('users/' + referredBy).once('value')).val();
+            if(referrer) {
+                const commissionPkr = amountPkr * 0.05;
+                await db.ref('users/' + referredBy).update({ pendingCommission: (referrer.pendingCommission || 0) + commissionPkr });
+                await db.ref('commissionHistory').push({ referrerUID: referredBy, fromUID: uid, fromUsername: user.username, amount: commissionPkr, date: new Date().toLocaleString() });
             }
         }
         loadDeposits();
         loadDashboard();
-        showToast(`Deposit of $${pkrToUsd(amountInPkr)} approved!`);
+        showToast(`Deposit approved!`);
     }
     
-    async function rejectDeposit(did) { if (!confirm("Reject this deposit?")) return; await db.ref('deposits/' + did).update({ status: 'rejected' }); loadDeposits(); showToast("Deposit rejected!"); }
+    async function rejectDeposit(did) { if(!confirm("Reject deposit?")) return; await db.ref('deposits/' + did).update({ status: 'rejected' }); loadDeposits(); showToast("Deposit rejected!"); }
     
-    // Withdrawals
     async function loadWithdrawals() {
-        const withdrawalsSnap = await db.ref('withdrawals').once('value');
-        const withdrawals = withdrawalsSnap.val() || {};
+        const withdrawals = (await db.ref('withdrawals').once('value')).val() || {};
         const tbody = document.getElementById('withdrawalsList');
         tbody.innerHTML = '';
-        for (const [wid, w] of Object.entries(withdrawals)) {
-            tbody.innerHTML += `<tr><td>${w.username || 'N/A'}</td><td>$${pkrToUsd(w.amount)}</td><td>${w.method || 'N/A'}</td><td>${w.account || 'N/A'}<br><small>${w.title || ''}</small></td><td>${w.date || 'N/A'}</td><td><span class="${w.status === 'pending' ? 'status-pending' : 'status-approved'}">${w.status}</span></td><td>${w.status === 'pending' ? `<button class="btn-approve" onclick="approveWithdraw('${wid}')">Approve</button><button class="btn-reject" onclick="rejectWithdraw('${wid}', ${w.amount}, '${w.uid}')">Reject</button>` : 'Processed'}</td></tr>`;
+        for(const [wid, w] of Object.entries(withdrawals)) {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${w.username || 'N/A'}</td>
+                    <td>$${pkrToUsd(w.amount)}</td>
+                    <td>${w.method || 'N/A'}</td>
+                    <td>${w.account || 'N/A'}</td>
+                    <td>${w.date || 'N/A'}</td>
+                    <td><span style="background:${w.status === 'pending' ? '#ffa50020' : '#2ed57320'}; color:${w.status === 'pending' ? '#ffa500' : '#2ed573'}; padding:4px 8px; border-radius:5px;">${w.status}</span></td>
+                    <td>${w.status === 'pending' ? `<button class="btn-approve" onclick="approveWithdraw('${wid}')">Approve</button><button class="btn-reject" onclick="rejectWithdraw('${wid}', ${w.amount}, '${w.uid}')">Reject</button>` : 'Done'}</td>
+                </tr>
+            `;
         }
-        if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No withdrawal requests found</td></tr>';
+        if(tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No withdrawals</td></table>';
     }
     
-    async function approveWithdraw(wid) { if (!confirm("Approve this withdrawal?")) return; await db.ref('withdrawals/' + wid).update({ status: 'approved' }); loadWithdrawals(); showToast("Withdrawal approved!"); }
+    async function approveWithdraw(wid) { if(!confirm("Approve withdrawal?")) return; await db.ref('withdrawals/' + wid).update({ status: 'approved' }); loadWithdrawals(); showToast("Withdrawal approved!"); }
+    async function rejectWithdraw(wid, amountPkr, uid) { if(!confirm("Reject withdrawal? Amount will be returned.")) return; await db.ref('withdrawals/' + wid).update({ status: 'rejected' }); const user = (await db.ref('users/' + uid).once('value')).val(); await db.ref('users/' + uid).update({ balance: (user.balance || 0) + amountPkr }); loadWithdrawals(); showToast("Withdrawal rejected! Amount returned."); }
     
-    async function rejectWithdraw(wid, amountInPkr, uid) { if (!confirm("Reject this withdrawal? Amount will be returned to user.")) return; await db.ref('withdrawals/' + wid).update({ status: 'rejected' }); const userSnap = await db.ref('users/' + uid).once('value'); const user = userSnap.val(); await db.ref('users/' + uid).update({ balance: (user.balance || 0) + amountInPkr }); loadWithdrawals(); showToast(`Withdrawal of $${pkrToUsd(amountInPkr)} rejected! Amount returned.`); }
-    
-    // Plans
     async function loadPlans() {
-        const plansSnap = await db.ref('plans').once('value');
-        const plans = plansSnap.val() || {};
+        const plans = (await db.ref('plans').once('value')).val() || {};
         const tbody = document.getElementById('plansList');
         tbody.innerHTML = '';
-        for (const [pid, p] of Object.entries(plans)) {
-            tbody.innerHTML += `<tr><td>${p.type || p.name || 'Plan'}</td><td>$${pkrToUsd(p.investment)}</td><td>$${pkrToUsd(p.dailyProfit)}</td><td>${p.days || 1} Days</td><td>${p.videoLink ? 'Yes' : 'No'}</td><td><button class="btn-edit" onclick="editPlan('${pid}', '${p.type || p.name}', ${p.investment}, ${p.dailyProfit}, ${p.days || 1}, '${p.videoLink || ''}')">Edit</button><button class="btn-delete" onclick="deletePlan('${pid}')">Delete</button></td></tr>`;
+        for(const [pid, p] of Object.entries(plans)) {
+            tbody.innerHTML += `<tr><td>${p.type || 'Plan'}</td><td>$${pkrToUsd(p.investment)}</td><td>$${pkrToUsd(p.dailyProfit)}</td><td>${p.days} days</td><td><button class="btn-edit" onclick="editPlan('${pid}', '${p.type}', ${p.investment}, ${p.dailyProfit}, ${p.days}, '${p.videoLink || ''}')">Edit</button><button class="btn-delete" onclick="deletePlan('${pid}')">Delete</button></td></tr>`;
         }
-        if (tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No plans found</td></tr>';
+        if(tbody.innerHTML === '') tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No plans</td></tr>';
     }
     
-    function openPlanModal() { editingPlanId = null; document.getElementById('planModalTitle').innerText = "Add New Plan"; document.getElementById('planName').value = ''; document.getElementById('planInvestment').value = ''; document.getElementById('planProfit').value = ''; document.getElementById('planDays').value = ''; document.getElementById('planVideo').value = ''; document.getElementById('planModal').style.display = 'flex'; }
+    function openPlanModal() { editingPlanId = null; document.getElementById('planModalTitle').innerText = "Add Plan"; document.getElementById('planName').value = ''; document.getElementById('planInvestment').value = ''; document.getElementById('planProfit').value = ''; document.getElementById('planDays').value = ''; document.getElementById('planVideo').value = ''; document.getElementById('planModal').style.display = 'flex'; }
     function closePlanModal() { document.getElementById('planModal').style.display = 'none'; }
-    function editPlan(pid, name, investmentInPkr, profitInPkr, days, video) { editingPlanId = pid; document.getElementById('planModalTitle').innerText = "Edit Plan"; document.getElementById('planName').value = name; document.getElementById('planInvestment').value = pkrToUsd(investmentInPkr); document.getElementById('planProfit').value = pkrToUsd(profitInPkr); document.getElementById('planDays').value = days; document.getElementById('planVideo').value = video; document.getElementById('planModal').style.display = 'flex'; }
-    async function savePlan() { const name = document.getElementById('planName').value; const investmentInUsd = parseFloat(document.getElementById('planInvestment').value); const profitInUsd = parseFloat(document.getElementById('planProfit').value); const days = parseInt(document.getElementById('planDays').value); const video = document.getElementById('planVideo').value; if (!name || !investmentInUsd || !profitInUsd || !days) { showToast("Fill all required fields"); return; } const planData = { type: name, investment: usdToPkr(investmentInUsd), dailyProfit: usdToPkr(profitInUsd), days: days, videoLink: video || "no-link" }; if (editingPlanId) { await db.ref('plans/' + editingPlanId).update(planData); showToast("Plan updated!"); } else { await db.ref('plans').push(planData); showToast("Plan added!"); } closePlanModal(); loadPlans(); }
-    async function deletePlan(pid) { if (!confirm("Delete this plan?")) return; await db.ref('plans/' + pid).remove(); loadPlans(); showToast("Plan deleted!"); }
+    function editPlan(pid, name, investmentPkr, profitPkr, days, video) { editingPlanId = pid; document.getElementById('planModalTitle').innerText = "Edit Plan"; document.getElementById('planName').value = name; document.getElementById('planInvestment').value = pkrToUsd(investmentPkr); document.getElementById('planProfit').value = pkrToUsd(profitPkr); document.getElementById('planDays').value = days; document.getElementById('planVideo').value = video; document.getElementById('planModal').style.display = 'flex'; }
+    async function savePlan() { const name = document.getElementById('planName').value; const investmentUsd = parseFloat(document.getElementById('planInvestment').value); const profitUsd = parseFloat(document.getElementById('planProfit').value); const days = parseInt(document.getElementById('planDays').value); const video = document.getElementById('planVideo').value; if(!name || !investmentUsd || !profitUsd || !days) { showToast("Fill all fields"); return; } const planData = { type: name, investment: usdToPkr(investmentUsd), dailyProfit: usdToPkr(profitUsd), days: days, videoLink: video || "no-link" }; if(editingPlanId) { await db.ref('plans/' + editingPlanId).update(planData); showToast("Plan updated!"); } else { await db.ref('plans').push(planData); showToast("Plan added!"); } closePlanModal(); loadPlans(); }
+    async function deletePlan(pid) { if(confirm("Delete plan?")) { await db.ref('plans/' + pid).remove(); loadPlans(); showToast("Plan deleted!"); } }
     
-    // Notifications
-    async function sendNotification() { const title = document.getElementById('notifTitle').value; const message = document.getElementById('notifMessage').value; if (!title || !message) { showToast("Enter title and message"); return; } await db.ref('notifications').push({ title: title, message: message, date: new Date().toLocaleString(), timestamp: Date.now() }); document.getElementById('notifTitle').value = ''; document.getElementById('notifMessage').value = ''; loadNotifications(); showToast("Notification sent to all users!"); }
-    async function loadNotifications() { const notifSnap = await db.ref('notifications').once('value'); const notifications = notifSnap.val() || {}; const container = document.getElementById('notificationsList'); container.innerHTML = ''; const sorted = Object.entries(notifications).sort((a,b) => (b[1].timestamp || 0) - (a[1].timestamp || 0)); if (sorted.length === 0) { container.innerHTML = '<div style="text-align:center; padding:20px;">No notifications sent yet</div>'; return; } for (const [nid, notif] of sorted) { container.innerHTML += `<div style="background:#1a1f2e; border-radius:10px; padding:12px; margin-bottom:10px; border-left:3px solid #00a859;"><div style="font-weight:bold; color:#00a859;">${escapeHtml(notif.title)}</div><div style="font-size:12px; margin:5px 0;">${escapeHtml(notif.message)}</div><div style="font-size:10px; color:#8b92a8;">${notif.date}</div><button onclick="deleteNotification('${nid}')" style="margin-top:8px; background:#e74c3c; color:white; padding:4px 10px; font-size:11px;">Delete</button></div>`; } }
-    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
-    async function deleteNotification(nid) { if (!confirm("Delete this notification?")) return; await db.ref('notifications/' + nid).remove(); loadNotifications(); showToast("Notification deleted!"); }
+    async function loadSettings() {
+        const settings = (await db.ref('settings').once('value')).val() || {};
+        document.getElementById('siteName').value = settings.siteName || 'HARRY LINE';
+        document.getElementById('qrUrl').value = settings.qrUrl || 'https://i.postimg.cc/G2ssm1rv/IMG-20260418-WA0002.jpg';
+        document.getElementById('qrPreview').src = settings.qrUrl || 'https://i.postimg.cc/G2ssm1rv/IMG-20260418-WA0002.jpg';
+        document.getElementById('binanceId').value = settings.binanceId || '1129708173';
+        document.getElementById('minWithdraw').value = settings.minWithdraw || 200;
+        document.getElementById('commission').value = settings.commission || 5;
+        document.getElementById('whatsappLink').value = settings.whatsappLink || 'https://chat.whatsapp.com/EBHZJaJsGqaKN009GQdNHA';
+    }
     
-    checkAndShowAutoCreate();
+    async function saveSettings() {
+        const settings = {
+            siteName: document.getElementById('siteName').value,
+            qrUrl: document.getElementById('qrUrl').value,
+            binanceId: document.getElementById('binanceId').value,
+            minWithdraw: parseFloat(document.getElementById('minWithdraw').value),
+            commission: parseFloat(document.getElementById('commission').value),
+            whatsappLink: document.getElementById('whatsappLink').value
+        };
+        await db.ref('settings').set(settings);
+        showToast("Settings saved!");
+    }
+    
+    async function sendNotification() {
+        const title = document.getElementById('notifTitle').value;
+        const msg = document.getElementById('notifMessage').value;
+        if(!title || !msg) { showToast("Enter title and message"); return; }
+        await db.ref('notifications').push({ title: title, message: msg, date: new Date().toLocaleString(), timestamp: Date.now() });
+        document.getElementById('notifTitle').value = '';
+        document.getElementById('notifMessage').value = '';
+        loadNotifications();
+        showToast("Notification sent!");
+    }
+    
+    async function loadNotifications() {
+        const notifs = (await db.ref('notifications').once('value')).val() || {};
+        const container = document.getElementById('notificationsList');
+        container.innerHTML = '';
+        const sorted = Object.entries(notifs).sort((a,b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
+        if(sorted.length === 0) { container.innerHTML = '<div style="text-align:center; padding:20px;">No notifications</div>'; return; }
+        for(const [nid, n] of sorted) {
+            container.innerHTML += `<div style="background:#1a1f2e; padding:12px; border-radius:10px; margin-bottom:10px; border-left:3px solid #00a859;"><div style="font-weight:bold;">${n.title}</div><div style="font-size:12px; margin:5px 0;">${n.message}</div><div style="font-size:10px; color:#8b92a8;">${n.date}</div><button onclick="deleteNotification('${nid}')" style="margin-top:8px; background:#e74c3c; padding:4px 10px;">Delete</button></div>`;
+        }
+    }
+    
+    async function deleteNotification(nid) { if(confirm("Delete notification?")) { await db.ref('notifications/' + nid).remove(); loadNotifications(); showToast("Deleted!"); } }
+    
+    // Auto create admin if not exists
+    async function setupAdmin() {
+        const admins = (await db.ref('admins').once('value')).val();
+        if(!admins) {
+            try {
+                const user = await auth.createUserWithEmailAndPassword('admin@harryline.com', 'Admin@123');
+                await db.ref('admins/' + user.user.uid).set({ email: 'admin@harryline.com', role: 'super_admin' });
+            } catch(e) {}
+        }
+    }
+    setupAdmin();
 </script>
 </body>
 </html>

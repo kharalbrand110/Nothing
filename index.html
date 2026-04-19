@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PAK EARN - Admin Panel</title>
+    <title>HARRY LINE - Admin Panel</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -43,7 +43,7 @@
         }
 
         .login-card h2 {
-            color: #F0B90B;
+            color: #00a859;
             text-align: center;
             margin-bottom: 30px;
             font-size: 28px;
@@ -63,10 +63,10 @@
         .login-card button {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #F0B90B, #d4a00e);
+            background: linear-gradient(135deg, #00a859, #008040);
             border: none;
             border-radius: 15px;
-            color: #0b0e11;
+            color: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
@@ -106,7 +106,7 @@
         }
 
         .sidebar-header h3 {
-            color: #F0B90B;
+            color: #00a859;
             font-size: 20px;
         }
 
@@ -126,9 +126,9 @@
         }
 
         .menu-item:hover, .menu-item.active {
-            background: rgba(240,185,11,0.1);
-            color: #F0B90B;
-            border-left-color: #F0B90B;
+            background: rgba(0,168,89,0.1);
+            color: #00a859;
+            border-left-color: #00a859;
         }
 
         .menu-item i {
@@ -190,7 +190,7 @@
         .stat-card .value {
             font-size: 28px;
             font-weight: 800;
-            color: #F0B90B;
+            color: #00a859;
         }
 
         /* Sections */
@@ -207,7 +207,7 @@
         }
 
         .section h3 {
-            color: #F0B90B;
+            color: #00a859;
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -231,10 +231,10 @@
 
         .search-box button {
             padding: 12px 20px;
-            background: #F0B90B;
+            background: #00a859;
             border: none;
             border-radius: 10px;
-            color: #0b0e11;
+            color: white;
             font-weight: bold;
             cursor: pointer;
         }
@@ -255,28 +255,28 @@
         }
 
         th {
-            color: #F0B90B;
+            color: #00a859;
         }
 
         /* Buttons */
         button {
-            background: #F0B90B;
+            background: #00a859;
             border: none;
             padding: 8px 15px;
             border-radius: 8px;
-            color: #0b0e11;
+            color: white;
             font-weight: bold;
             cursor: pointer;
             margin: 3px;
         }
 
-        .btn-approve { background: #2ed573; color: white; }
-        .btn-reject { background: #e74c3c; color: white; }
-        .btn-edit { background: #3498db; color: white; }
-        .btn-delete { background: #e74c3c; color: white; }
-        .btn-block { background: #e74c3c; color: white; }
-        .btn-unblock { background: #2ed573; color: white; }
-        .btn-add { background: #2ed573; color: white; }
+        .btn-approve { background: #2ed573; }
+        .btn-reject { background: #e74c3c; }
+        .btn-edit { background: #3498db; }
+        .btn-delete { background: #e74c3c; }
+        .btn-block { background: #e74c3c; }
+        .btn-unblock { background: #2ed573; }
+        .btn-add { background: #2ed573; }
 
         .status-pending {
             background: rgba(255,165,0,0.2);
@@ -330,7 +330,7 @@
         }
 
         .modal-content h3 {
-            color: #F0B90B;
+            color: #00a859;
             margin-bottom: 20px;
         }
 
@@ -373,7 +373,7 @@
         }
 
         .user-detail-box strong {
-            color: #F0B90B;
+            color: #00a859;
         }
 
         .balance-control {
@@ -393,26 +393,12 @@
             cursor: pointer;
         }
 
-        .qr-preview {
-            text-align: center;
-            margin: 15px 0;
-            padding: 15px;
-            background: #1a1f2e;
-            border-radius: 10px;
-        }
-
-        .qr-preview img {
-            max-width: 150px;
-            border-radius: 10px;
-            border: 2px solid #F0B90B;
-        }
-
         .toast {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: #F0B90B;
-            color: #0b0e11;
+            background: #00a859;
+            color: white;
             padding: 12px 24px;
             border-radius: 10px;
             z-index: 10001;
@@ -474,17 +460,17 @@
 <!-- Login Page -->
 <div id="loginPage" class="login-container">
     <div class="login-card">
-        <h2><i class="fab fa-bitcoin"></i> PAK EARN ADMIN</h2>
+        <h2><i class="fas fa-dollar-sign"></i> HARRY LINE ADMIN</h2>
         <div id="autoCreateBox" class="auto-create-box" style="display:none;">
             <p><i class="fas fa-info-circle"></i> No admin account found! Create one:</p>
             <button class="auto-create-btn" onclick="autoCreateAdmin()"><i class="fas fa-user-plus"></i> Create Admin</button>
         </div>
-        <input type="email" id="adminEmail" placeholder="Admin Email" value="admin@pakearn.com">
+        <input type="email" id="adminEmail" placeholder="Admin Email" value="admin@harryline.com">
         <input type="password" id="adminPassword" placeholder="Password" value="Admin@123">
         <button onclick="adminLogin()"><i class="fas fa-sign-in-alt"></i> LOGIN</button>
         <div id="loginError" class="error-msg"></div>
         <div style="text-align:center; margin-top:20px; font-size:11px; color:#8b92a8;">
-            Default: admin@pakearn.com / Admin@123
+            Default: admin@harryline.com / Admin@123
         </div>
     </div>
 </div>
@@ -493,7 +479,7 @@
 <div id="adminPanel" class="admin-container">
     <div class="sidebar">
         <div class="sidebar-header">
-            <h3><i class="fab fa-bitcoin"></i> PAK EARN</h3>
+            <h3><i class="fas fa-dollar-sign"></i> HARRY LINE</h3>
         </div>
         <div class="sidebar-menu">
             <div class="menu-item active" onclick="showSection('dashboard')">
@@ -510,9 +496,6 @@
             </div>
             <div class="menu-item" onclick="showSection('plans')">
                 <i class="fas fa-box"></i><span> Investment Plans</span>
-            </div>
-            <div class="menu-item" onclick="showSection('settings')">
-                <i class="fas fa-cog"></i><span> Settings</span>
             </div>
             <div class="menu-item" onclick="showSection('notifications')">
                 <i class="fas fa-bell"></i><span> Notifications</span>
@@ -543,15 +526,11 @@
                 </div>
                 <div class="stat-card">
                     <h4><i class="fas fa-chart-line"></i> Total Deposit Balance</h4>
-                    <div class="value" id="totalDepositBal">Rs 0</div>
+                    <div class="value" id="totalDepositBal">$0</div>
                 </div>
                 <div class="stat-card">
                     <h4><i class="fas fa-chart-line"></i> Total Profit Balance</h4>
-                    <div class="value" id="totalProfitBal">Rs 0</div>
-                </div>
-                <div class="stat-card">
-                    <h4><i class="fas fa-coins"></i> Total Commission Paid</h4>
-                    <div class="value" id="totalCommission">Rs 0</div>
+                    <div class="value" id="totalProfitBal">$0</div>
                 </div>
             </div>
         </div>
@@ -603,69 +582,24 @@
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
-                        <tr><th>Name</th><th>Investment</th><th>Daily Profit</th><th>Duration</th><th>Video Link</th><th>Actions</th></tr>
+                        <tr><th>Name</th><th>Investment ($)</th><th>Daily Profit ($)</th><th>Duration</th><th>Video Link</th><th>Actions</th></tr>
                     </thead>
                     <tbody id="plansList"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Settings Section -->
-        <div id="settingsSection" class="section">
-            <div class="stats-grid" style="margin-bottom:20px;">
-                <div class="stat-card">
-                    <h4>Binance QR Code</h4>
-                    <div class="qr-preview">
-                        <img id="currentQrImage" src="" alt="Binance QR">
-                    </div>
-                    <input type="text" id="qrUrl" placeholder="Binance QR Code Image URL">
-                    <button onclick="updateQRSettings()" style="width:100%; margin-top:10px;">Update QR Code</button>
-                </div>
-                <div class="stat-card">
-                    <h4>Binance ID</h4>
-                    <input type="text" id="binanceId" placeholder="Binance ID">
-                    <button onclick="updateBinanceId()" style="width:100%; margin-top:10px;">Update Binance ID</button>
-                </div>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h4>Withdrawal Settings</h4>
-                    <label style="color:#8b92a8; font-size:12px;">Minimum Withdrawal Amount</label>
-                    <input type="number" id="minWithdraw" placeholder="Min Withdrawal Amount">
-                    <button onclick="updateWithdrawSettings()" style="width:100%; margin-top:10px;">Save</button>
-                </div>
-                <div class="stat-card">
-                    <h4>Referral Commission</h4>
-                    <label style="color:#8b92a8; font-size:12px;">Commission Percentage (%)</label>
-                    <input type="number" id="commissionPercent" placeholder="Commission %" step="0.5">
-                    <button onclick="updateCommissionSettings()" style="width:100%; margin-top:10px;">Save</button>
-                </div>
-                <div class="stat-card">
-                    <h4>Support Settings</h4>
-                    <label style="color:#8b92a8; font-size:12px;">WhatsApp Group Link</label>
-                    <input type="text" id="whatsappLink" placeholder="WhatsApp Link">
-                    <button onclick="updateSupportSettings()" style="width:100%; margin-top:10px;">Save</button>
-                </div>
-            </div>
-        </div>
-
         <!-- Notifications Section -->
         <div id="notificationsSection" class="section">
-            <div class="stats-grid" style="margin-bottom:20px;">
-                <div class="stat-card">
-                    <h4><i class="fas fa-paper-plane"></i> Send Notification</h4>
-                    <input type="text" id="notifTitle" placeholder="Notification Title" style="margin-bottom:10px;">
-                    <textarea id="notifMessage" placeholder="Notification Message" rows="3"></textarea>
-                    <button onclick="sendNotification()" style="width:100%; margin-top:10px;">Send to All Users</button>
-                </div>
+            <div style="background: #1a1f2e; border-radius: 15px; padding: 20px; margin-bottom: 20px;">
+                <h3 style="color:#00a859; margin-bottom:15px;"><i class="fas fa-paper-plane"></i> Send Notification</h3>
+                <input type="text" id="notifTitle" placeholder="Notification Title" style="width:100%; padding:12px; margin-bottom:15px; background:#0f1422; border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:white;">
+                <textarea id="notifMessage" placeholder="Notification Message" rows="3" style="width:100%; padding:12px; margin-bottom:15px; background:#0f1422; border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:white;"></textarea>
+                <button onclick="sendNotification()" style="width:100%;">Send to All Users</button>
             </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h4><i class="fas fa-history"></i> Sent Notifications</h4>
-                    <div id="notificationsList" style="max-height: 400px; overflow-y: auto;">
-                        <div style="text-align:center; padding:20px;">Loading...</div>
-                    </div>
-                </div>
+            <div style="background: #1a1f2e; border-radius: 15px; padding: 20px;">
+                <h3 style="color:#00a859; margin-bottom:15px;"><i class="fas fa-history"></i> Sent Notifications</h3>
+                <div id="notificationsList" style="max-height: 400px; overflow-y: auto;"></div>
             </div>
         </div>
     </div>
@@ -677,7 +611,7 @@
         <h3 id="userModalTitle">Manage User</h3>
         <div id="userDetails" class="user-detail-box"></div>
         
-        <h4 style="color:#F0B90B; margin-bottom:10px;">Update Balance</h4>
+        <h4 style="color:#00a859; margin-bottom:10px;">Update Balance ($)</h4>
         <div class="balance-control">
             <select id="balanceType">
                 <option value="depositBalance">Deposit Balance</option>
@@ -687,11 +621,11 @@
                 <option value="add">Add (+)</option>
                 <option value="remove">Remove (-)</option>
             </select>
-            <input type="number" id="balanceAmount" placeholder="Amount">
+            <input type="number" id="balanceAmount" placeholder="Amount in $" step="0.01">
         </div>
-        <button onclick="updateUserBalance()" style="width:100%; background:#3498db; color:white;">Update Balance</button>
+        <button onclick="updateUserBalance()" style="width:100%; background:#3498db;">Update Balance</button>
         
-        <h4 style="color:#F0B90B; margin:15px 0 10px 0;">User Actions</h4>
+        <h4 style="color:#00a859; margin:15px 0 10px 0;">User Actions</h4>
         <div class="modal-buttons">
             <button id="toggleStatusBtn" onclick="toggleUserStatus()">Block User</button>
             <button onclick="resetUserPassword()" style="background:#f39c12;">Reset Password</button>
@@ -708,8 +642,8 @@
     <div class="modal-content">
         <h3 id="planModalTitle">Add New Plan</h3>
         <input type="text" id="planName" placeholder="Plan Name">
-        <input type="number" id="planInvestment" placeholder="Investment Amount (Rs)">
-        <input type="number" id="planProfit" placeholder="Daily Profit (Rs)">
+        <input type="number" id="planInvestment" placeholder="Investment Amount ($)" step="0.01">
+        <input type="number" id="planProfit" placeholder="Daily Profit ($)" step="0.01">
         <input type="number" id="planDays" placeholder="Duration (Days)">
         <input type="text" id="planVideo" placeholder="Video/Ad Link">
         <div class="modal-buttons">
@@ -742,6 +676,17 @@
     let selectedUserId = null;
     let selectedUserData = null;
     
+    // Conversion rate: 1 USD = 280 PKR
+    const USD_TO_PKR = 280;
+    
+    function pkrToUsd(amount) {
+        return (amount / USD_TO_PKR).toFixed(2);
+    }
+    
+    function usdToPkr(amount) {
+        return amount * USD_TO_PKR;
+    }
+    
     function showToast(msg) {
         const toast = document.createElement('div');
         toast.className = 'toast';
@@ -760,7 +705,7 @@
     
     // Auto Create Admin
     async function autoCreateAdmin() {
-        const email = "admin@pakearn.com";
+        const email = "admin@harryline.com";
         const password = "Admin@123";
         showMessage("Creating admin account...", "info");
         try {
@@ -826,7 +771,6 @@
             loadDeposits();
             loadWithdrawals();
             loadPlans();
-            loadSettings();
             loadNotifications();
             
             showToast("Welcome Admin!");
@@ -868,7 +812,6 @@
         if (section === 'deposits') loadDeposits();
         if (section === 'withdrawals') loadWithdrawals();
         if (section === 'plans') loadPlans();
-        if (section === 'settings') loadSettings();
         if (section === 'notifications') loadNotifications();
     }
     
@@ -878,15 +821,13 @@
         const users = usersSnap.val() || {};
         document.getElementById('totalUsers').innerText = Object.keys(users).length;
         
-        let totalDepositBal = 0, totalProfitBal = 0, totalCommission = 0;
+        let totalDepositBal = 0, totalProfitBal = 0;
         Object.values(users).forEach(u => {
             totalDepositBal += (u.depositBalance || 0);
             totalProfitBal += (u.balance || 0);
-            totalCommission += (u.pendingCommission || 0);
         });
-        document.getElementById('totalDepositBal').innerText = `Rs ${totalDepositBal.toFixed(2)}`;
-        document.getElementById('totalProfitBal').innerText = `Rs ${totalProfitBal.toFixed(2)}`;
-        document.getElementById('totalCommission').innerText = `Rs ${totalCommission.toFixed(2)}`;
+        document.getElementById('totalDepositBal').innerText = `$${pkrToUsd(totalDepositBal)}`;
+        document.getElementById('totalProfitBal').innerText = `$${pkrToUsd(totalProfitBal)}`;
         
         const depositsSnap = await db.ref('deposits').once('value');
         const deposits = depositsSnap.val() || {};
@@ -917,8 +858,8 @@
                     <td>${u.username || 'N/A'}</td>
                     <td>${u.email || 'N/A'}</td>
                     <td>${u.phone || 'N/A'}</td>
-                    <td>Rs ${(u.depositBalance || 0).toFixed(2)}</td>
-                    <td>Rs ${(u.balance || 0).toFixed(2)}</td>
+                    <td>$${pkrToUsd(u.depositBalance || 0)}</td>
+                    <td>$${pkrToUsd(u.balance || 0)}</td>
                     <td><span class="${statusClass}">${statusText}</span></td>
                     <td><button class="btn-edit" onclick="openUserModal('${uid}')"><i class="fas fa-edit"></i> Manage</button></td>
                 </tr>
@@ -947,8 +888,8 @@
                             <td>${u.username || 'N/A'}</td>
                             <td>${u.email || 'N/A'}</td>
                             <td>${u.phone || 'N/A'}</td>
-                            <td>Rs ${(u.depositBalance || 0).toFixed(2)}</td>
-                            <td>Rs ${(u.balance || 0).toFixed(2)}</td>
+                            <td>$${pkrToUsd(u.depositBalance || 0)}</td>
+                            <td>$${pkrToUsd(u.balance || 0)}</td>
                             <td><span class="${statusClass}">${statusText}</span></td>
                             <td><button class="btn-edit" onclick="openUserModal('${uid}')">Manage</button></td>
                         </tr>
@@ -970,8 +911,8 @@
         document.getElementById('userDetails').innerHTML = `
             <p><strong>📧 Email:</strong> ${selectedUserData.email || 'N/A'}</p>
             <p><strong>📱 Phone:</strong> ${selectedUserData.phone || 'N/A'}</p>
-            <p><strong>💰 Deposit Balance:</strong> Rs ${(selectedUserData.depositBalance || 0).toFixed(2)}</p>
-            <p><strong>💵 Profit Balance:</strong> Rs ${(selectedUserData.balance || 0).toFixed(2)}</p>
+            <p><strong>💰 Deposit Balance:</strong> $${pkrToUsd(selectedUserData.depositBalance || 0)}</p>
+            <p><strong>💵 Profit Balance:</strong> $${pkrToUsd(selectedUserData.balance || 0)}</p>
             <p><strong>📅 Joined:</strong> ${selectedUserData.joinedDate || 'N/A'}</p>
             <p><strong>🔗 Referred By:</strong> ${selectedUserData.referredBy || 'none'}</p>
         `;
@@ -998,19 +939,20 @@
     async function updateUserBalance() {
         const balanceType = document.getElementById('balanceType').value;
         const action = document.getElementById('actionType').value;
-        const amount = parseFloat(document.getElementById('balanceAmount').value);
+        const amountInUsd = parseFloat(document.getElementById('balanceAmount').value);
         
-        if (isNaN(amount) || amount <= 0) {
-            showToast("Enter valid amount");
+        if (isNaN(amountInUsd) || amountInUsd <= 0) {
+            showToast("Enter valid amount in USD");
             return;
         }
         
+        const amountInPkr = usdToPkr(amountInUsd);
         const currentBalance = selectedUserData[balanceType] || 0;
-        let newBalance = action === 'add' ? currentBalance + amount : currentBalance - amount;
+        let newBalance = action === 'add' ? currentBalance + amountInPkr : currentBalance - amountInPkr;
         if (newBalance < 0) newBalance = 0;
         
         await db.ref('users/' + selectedUserId).update({ [balanceType]: newBalance });
-        showToast(`Balance updated! New ${balanceType === 'depositBalance' ? 'Deposit' : 'Profit'} Balance: Rs ${newBalance.toFixed(2)}`);
+        showToast(`Balance updated! New ${balanceType === 'depositBalance' ? 'Deposit' : 'Profit'} Balance: $${pkrToUsd(newBalance)}`);
         closeUserModal();
         loadUsers();
         loadDashboard();
@@ -1058,7 +1000,7 @@
             tbody.innerHTML += `
                 <tr>
                     <td>${d.username || 'N/A'}</td>
-                    <td>Rs ${d.amount}</td>
+                    <td>$${pkrToUsd(d.amount)}</td>
                     <td>${d.tid || 'N/A'}</td>
                     <td>${screenshotHtml}</td>
                     <td>${d.date || 'N/A'}</td>
@@ -1068,7 +1010,7 @@
                             `<button class="btn-approve" onclick="approveDeposit('${did}', ${d.amount}, '${d.uid}', '${d.referredBy || ''}')">Approve</button>
                              <button class="btn-reject" onclick="rejectDeposit('${did}')">Reject</button>` : 
                             'Processed'}
-                    </td>
+                     </td>
                 </tr>
             `;
         }
@@ -1077,32 +1019,32 @@
         }
     }
     
-    async function approveDeposit(did, amount, uid, referredBy) {
-        if (!confirm(`Approve deposit of Rs ${amount}?`)) return;
+    async function approveDeposit(did, amountInPkr, uid, referredBy) {
+        if (!confirm(`Approve deposit of $${pkrToUsd(amountInPkr)}?`)) return;
         
         await db.ref('deposits/' + did).update({ status: 'approved' });
         
         const userSnap = await db.ref('users/' + uid).once('value');
         const user = userSnap.val();
         await db.ref('users/' + uid).update({
-            depositBalance: (user.depositBalance || 0) + amount,
+            depositBalance: (user.depositBalance || 0) + amountInPkr,
             hasDeposited: true
         });
         
-        // Add commission to referrer
+        // Add 5% commission to referrer
         if (referredBy && referredBy !== "none") {
             const refSnap = await db.ref('users/' + referredBy).once('value');
             const referrer = refSnap.val();
             if (referrer) {
-                const commission = amount * 0.05;
+                const commissionInPkr = amountInPkr * 0.05;
                 await db.ref('users/' + referredBy).update({
-                    pendingCommission: (referrer.pendingCommission || 0) + commission
+                    pendingCommission: (referrer.pendingCommission || 0) + commissionInPkr
                 });
                 await db.ref('commissionHistory').push({
                     referrerUID: referredBy,
                     fromUID: uid,
                     fromUsername: user.username || 'User',
-                    amount: commission,
+                    amount: commissionInPkr,
                     date: new Date().toLocaleString()
                 });
             }
@@ -1110,7 +1052,7 @@
         
         loadDeposits();
         loadDashboard();
-        showToast("Deposit approved!");
+        showToast(`Deposit of $${pkrToUsd(amountInPkr)} approved!`);
     }
     
     async function rejectDeposit(did) {
@@ -1131,7 +1073,7 @@
             tbody.innerHTML += `
                 <tr>
                     <td>${w.username || 'N/A'}</td>
-                    <td>Rs ${w.amount}</td>
+                    <td>$${pkrToUsd(w.amount)}</td>
                     <td>${w.method || 'N/A'}</td>
                     <td>${w.account || 'N/A'}<br><small>${w.title || ''}</small></td>
                     <td>${w.date || 'N/A'}</td>
@@ -1141,7 +1083,7 @@
                             `<button class="btn-approve" onclick="approveWithdraw('${wid}')">Approve</button>
                              <button class="btn-reject" onclick="rejectWithdraw('${wid}', ${w.amount}, '${w.uid}')">Reject</button>` : 
                             'Processed'}
-                    </td>
+                     </td>
                 </tr>
             `;
         }
@@ -1157,7 +1099,7 @@
         showToast("Withdrawal approved!");
     }
     
-    async function rejectWithdraw(wid, amount, uid) {
+    async function rejectWithdraw(wid, amountInPkr, uid) {
         if (!confirm("Reject this withdrawal? Amount will be returned to user.")) return;
         
         await db.ref('withdrawals/' + wid).update({ status: 'rejected' });
@@ -1165,11 +1107,11 @@
         const userSnap = await db.ref('users/' + uid).once('value');
         const user = userSnap.val();
         await db.ref('users/' + uid).update({
-            balance: (user.balance || 0) + amount
+            balance: (user.balance || 0) + amountInPkr
         });
         
         loadWithdrawals();
-        showToast("Withdrawal rejected! Amount returned.");
+        showToast(`Withdrawal of $${pkrToUsd(amountInPkr)} rejected! Amount returned.`);
     }
     
     // Plans Management
@@ -1180,17 +1122,19 @@
         tbody.innerHTML = '';
         
         for (const [pid, p] of Object.entries(plans)) {
+            const investmentInUsd = pkrToUsd(p.investment);
+            const profitInUsd = pkrToUsd(p.dailyProfit);
             tbody.innerHTML += `
                 <tr>
                     <td>${p.type || p.name || 'Plan'}</td>
-                    <td>Rs ${p.investment}</td>
-                    <td>Rs ${p.dailyProfit}</td>
+                    <td>$${investmentInUsd}</td>
+                    <td>$${profitInUsd}</td>
                     <td>${p.days || 1} Days</td>
                     <td>${p.videoLink ? 'Yes' : 'No'}</td>
                     <td>
                         <button class="btn-edit" onclick="editPlan('${pid}', '${p.type || p.name}', ${p.investment}, ${p.dailyProfit}, ${p.days || 1}, '${p.videoLink || ''}')">Edit</button>
                         <button class="btn-delete" onclick="deletePlan('${pid}')">Delete</button>
-                    </td>
+                     </td>
                 </tr>
             `;
         }
@@ -1214,12 +1158,12 @@
         document.getElementById('planModal').style.display = 'none';
     }
     
-    function editPlan(pid, name, investment, profit, days, video) {
+    function editPlan(pid, name, investmentInPkr, profitInPkr, days, video) {
         editingPlanId = pid;
         document.getElementById('planModalTitle').innerText = "Edit Plan";
         document.getElementById('planName').value = name;
-        document.getElementById('planInvestment').value = investment;
-        document.getElementById('planProfit').value = profit;
+        document.getElementById('planInvestment').value = pkrToUsd(investmentInPkr);
+        document.getElementById('planProfit').value = pkrToUsd(profitInPkr);
         document.getElementById('planDays').value = days;
         document.getElementById('planVideo').value = video;
         document.getElementById('planModal').style.display = 'flex';
@@ -1227,20 +1171,23 @@
     
     async function savePlan() {
         const name = document.getElementById('planName').value;
-        const investment = parseFloat(document.getElementById('planInvestment').value);
-        const profit = parseFloat(document.getElementById('planProfit').value);
+        const investmentInUsd = parseFloat(document.getElementById('planInvestment').value);
+        const profitInUsd = parseFloat(document.getElementById('planProfit').value);
         const days = parseInt(document.getElementById('planDays').value);
         const video = document.getElementById('planVideo').value;
         
-        if (!name || !investment || !profit || !days) {
+        if (!name || !investmentInUsd || !profitInUsd || !days) {
             showToast("Fill all required fields");
             return;
         }
         
+        const investmentInPkr = usdToPkr(investmentInUsd);
+        const profitInPkr = usdToPkr(profitInUsd);
+        
         const planData = {
             type: name,
-            investment: investment,
-            dailyProfit: profit,
+            investment: investmentInPkr,
+            dailyProfit: profitInPkr,
             days: days,
             videoLink: video || "no-link"
         };
@@ -1261,53 +1208,6 @@
         await db.ref('plans/' + pid).remove();
         loadPlans();
         showToast("Plan deleted!");
-    }
-    
-    // Settings
-    async function loadSettings() {
-        const settingsSnap = await db.ref('settings').once('value');
-        const settings = settingsSnap.val() || {};
-        document.getElementById('qrUrl').value = settings.qrUrl || 'https://i.postimg.cc/G2ssm1rv/IMG-20260418-WA0002.jpg';
-        document.getElementById('currentQrImage').src = settings.qrUrl || 'https://i.postimg.cc/G2ssm1rv/IMG-20260418-WA0002.jpg';
-        document.getElementById('binanceId').value = settings.binanceId || '1129708173';
-        document.getElementById('minWithdraw').value = settings.minWithdraw || 10000;
-        document.getElementById('commissionPercent').value = settings.commissionPercent || 5;
-        document.getElementById('whatsappLink').value = settings.whatsappLink || 'https://chat.whatsapp.com/EBHZJaJsGqaKN009GQdNHA';
-    }
-    
-    async function updateQRSettings() {
-        const qrUrl = document.getElementById('qrUrl').value;
-        if (!qrUrl) { showToast("Enter QR code URL"); return; }
-        await db.ref('settings').update({ qrUrl: qrUrl });
-        document.getElementById('currentQrImage').src = qrUrl;
-        showToast("QR Code updated!");
-    }
-    
-    async function updateBinanceId() {
-        const binanceId = document.getElementById('binanceId').value;
-        if (!binanceId) { showToast("Enter Binance ID"); return; }
-        await db.ref('settings').update({ binanceId: binanceId });
-        showToast("Binance ID updated!");
-    }
-    
-    async function updateWithdrawSettings() {
-        const minWithdraw = parseFloat(document.getElementById('minWithdraw').value);
-        if (isNaN(minWithdraw)) { showToast("Enter valid amount"); return; }
-        await db.ref('settings').update({ minWithdraw: minWithdraw });
-        showToast(`Minimum withdrawal set to Rs ${minWithdraw}`);
-    }
-    
-    async function updateCommissionSettings() {
-        const commission = parseFloat(document.getElementById('commissionPercent').value);
-        if (isNaN(commission)) { showToast("Enter valid percentage"); return; }
-        await db.ref('settings').update({ commissionPercent: commission });
-        showToast(`Commission set to ${commission}%`);
-    }
-    
-    async function updateSupportSettings() {
-        const whatsapp = document.getElementById('whatsappLink').value;
-        await db.ref('settings').update({ whatsappLink: whatsapp });
-        showToast("Support link updated!");
     }
     
     // Notifications
@@ -1348,8 +1248,8 @@
         
         for (const [nid, notif] of sorted) {
             container.innerHTML += `
-                <div style="background:#1a1f2e; border-radius:10px; padding:12px; margin-bottom:10px; border-left:3px solid #F0B90B;">
-                    <div style="font-weight:bold; color:#F0B90B;">${escapeHtml(notif.title)}</div>
+                <div style="background:#1a1f2e; border-radius:10px; padding:12px; margin-bottom:10px; border-left:3px solid #00a859;">
+                    <div style="font-weight:bold; color:#00a859;">${escapeHtml(notif.title)}</div>
                     <div style="font-size:12px; margin:5px 0;">${escapeHtml(notif.message)}</div>
                     <div style="font-size:10px; color:#8b92a8;">${notif.date}</div>
                     <button onclick="deleteNotification('${nid}')" style="margin-top:8px; background:#e74c3c; color:white; padding:4px 10px; font-size:11px;">Delete</button>
